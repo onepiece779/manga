@@ -265,35 +265,30 @@
 
   /* ================= HOME ================= */
   function home() {
-    if (document.body.dataset.homeDone) return; document.body.dataset.homeDone = "1";
-    var slider = $("#hero-slider");
-    if (slider) {
-      slider.innerHTML = S.slides.map(function (s, i) {
-        var t = find(s.titleId) || S.titles[0];
-        return '<section class="mkm-hero mkm-hero-slide' + (cover(t) ? " has-cover" : "") + '" style="--mkm-hero-bg:url(&quot;' + bg(t) + '&quot;)">' +
-          '<div class="mkm-container mkm-hero-inner">' +
-          '<div class="mkm-hero-cover"><img src="' + cover(t) + '" onerror="this.onerror=null;this.src=\'' + coverSvg(t) + '\'" alt="' + esc(t.title) + ' cover"' + (i ? ' loading="lazy"' : "") + '></div>' +
-          '<div class="mkm-hero-content">' +
-          (s.badge ? '<span class="mkm-badge">' + esc(s.badge) + "</span>" : "") +
-          "<h1>" + esc(s.title) + "</h1><p>" + esc(s.text) + "</p>" +
-          '<div class="mkm-hero-actions">' +
-          (s.btn1 ? '<a class="mkm-btn" href="' + esc(s.btn1.href) + '">' + esc(s.btn1.label) + "</a>" : "") +
-          (s.btn2 ? '<a class="mkm-btn mkm-btn-ghost" href="' + esc(s.btn2.href) + '">' + esc(s.btn2.label) + "</a>" : "") +
-          "</div>" +
-          (s.stats ? '<div class="mkm-stats">' + s.stats.map(function (x) {
-            return '<div class="mkm-stat"><span class="mkm-stat-num">' + esc(x.num) + '</span><span class="mkm-stat-label">' + esc(x.label) + "</span></div>";
-          }).join("") + "</div>" : "") +
-          "</div></div></section>";
-      }).join("") +
-      (S.slides.length > 1 ? '<div class="mkm-slider-controls" hidden><button type="button" class="mkm-slider-prev" aria-label="Previous slide">&#8592;</button><button type="button" class="mkm-slider-next" aria-label="Next slide">&#8594;</button></div>' : "");
-      $$(".mkm-hero-slide", slider).forEach(function (sl, i) { sl.hidden = i !== 0; });
-    }
-
+    var root = $("#home-root");
+    if (!root) return;
+    var slides = S.slides.map(function (s, i) {
+      var t = find(s.titleId) || S.titles[0];
+      return '<section class="mkm-hero mkm-hero-slide' + (cover(t) ? " has-cover" : "") + '" style="--mkm-hero-bg:url(&quot;' + bg(t) + '&quot;)">' +
+        '<div class="mkm-container mkm-hero-inner">' +
+        '<div class="mkm-hero-cover"><img src="' + cover(t) + '" onerror="this.onerror=null;this.src=\'' + coverSvg(t) + '\'" alt="' + esc(t.title) + ' cover"' + (i ? ' loading="lazy"' : "") + '></div>' +
+        '<div class="mkm-hero-content">' +
+        (s.badge ? '<span class="mkm-badge">' + esc(s.badge) + "</span>" : "") +
+        "<h1>" + esc(s.title) + "</h1><p>" + esc(s.text) + "</p>" +
+        '<div class="mkm-hero-actions">' +
+        (s.btn1 ? '<a class="mkm-btn" href="' + esc(s.btn1.href) + '">' + esc(s.btn1.label) + "</a>" : "") +
+        (s.btn2 ? '<a class="mkm-btn mkm-btn-ghost" href="' + esc(s.btn2.href) + '">' + esc(s.btn2.label) + "</a>" : "") +
+        "</div>" +
+        (s.stats ? '<div class="mkm-stats">' + s.stats.map(function (x) {
+          return '<div class="mkm-stat"><span class="mkm-stat-num">' + esc(x.num) + '</span><span class="mkm-stat-label">' + esc(x.label) + "</span></div>";
+        }).join("") + "</div>" : "") +
+        "</div></div></section>";
+    }).join("");
     var f = S.feature, ft = find(f.mangaId), fc = ft ? chOf(ft, f.chapterNum) : null;
-    var feat = $("#feature");
-    if (feat && ft) {
-      feat.innerHTML = '<div class="mkm-container"><div class="mkm-layout mkm-feature-layout">' +
-        '<article class="mkm-feature-card"><h2>作品紹介:' + esc(ft.title) + '</h2>' +
+    var feat = "";
+    if (ft) {
+      feat = '<div id="feature"><div class="mkm-container"><div class="mkm-layout mkm-feature-layout">' +
+        '<article class="mkm-feature-card"><h2>作品紹介:' + esc(ft.title) + "</h2>" +
         '<div class="mkm-entry-content"><p>' + esc(ft.description) + "</p></div>" +
         '<div class="mkm-feature-genres">' + ft.genres.map(function (g) { return '<a class="mkm-genre" href="search.html?s=' + encodeURIComponent(g) + '">' + esc(g) + "</a>"; }).join("") + "</div>" +
         '<dl class="mkm-feature-meta">' +
@@ -301,29 +296,29 @@
           var p = kv.split(":");
           return "<div><dt>" + esc(p[0]) + "</dt><dd>" + esc(p.slice(1).join(":")) + "</dd></div>";
         }).join("") + "</dl></article>" +
-        '<div class="mkm-sidebar"></div></div></div>';
+        '<div class="mkm-sidebar"></div></div></div></div>';
     }
-
-    var grid = $("#latest-grid");
-    if (grid) {
-      var ordered = allChapters().map(function (x) { return x.t; })
-        .filter(function (t, i, arr) { return arr.indexOf(t) === i; });
-      S.titles.forEach(function (t) { if (ordered.indexOf(t) === -1) ordered.push(t); });
-      grid.innerHTML = ordered.map(card).join("");
-      var head = $(".mkm-listing-section .mkm-subtitle");
-      if (head) head.textContent = ordered.length + "作品のオリジナルマンガ連載 — 毎日更新中。";
-    }
-
-    var hr = $("#home-reader");
-    if (hr && ft && fc) {
+    var ordered = allChapters().map(function (x) { return x.t; }).filter(function (t, i, arr) { return arr.indexOf(t) === i; });
+    S.titles.forEach(function (t) { if (ordered.indexOf(t) === -1) ordered.push(t); });
+    var latest = '<div class="mkm-container"><div class="mkm-layout mkm-latest-full"><div>' +
+      '<div class="mkm-section mkm-listing-section" id="latest"><div class="mkm-section-head">' +
+      '<div><h2 class="mkm-title">最新マンガ</h2><p class="mkm-subtitle">' + ordered.length + '作品のオリジナル連載 — 毎日更新中</p></div>' +
+      '<a class="mkm-btn mkm-btn-sm mkm-btn-ghost" href="search.html">すべて見る</a></div>' +
+      '<div class="mkm-grid">' + ordered.map(card).join("") + "</div></div></div></div></div>";
+    var reader = "";
+    if (ft && fc) {
       var plist = pageList(ft, fc);
       var n = Math.min(f.previewPages || 3, plist.length);
-      var imgs = plist.slice(0, n).map(function (p, k) { return imgTag(p, k > 1); });
-      hr.innerHTML = '<section class="mkm-container mkm-home-reader" id="reader" aria-label="Chapter reader">' +
-        '<div class="mkm-home-reader-title"><span>いま読まれている</span><h2>第' + esc(fc.num) + '話:' + esc(fc.title) + '</h2><p>' + esc(ft.title) + '</p></div>' +
-        '<div class="mkm-reader-images">' + imgs.join("") + "</div>" +
+      reader = '<section class="mkm-container mkm-home-reader" id="reader" aria-label="Chapter reader">' +
+        '<div class="mkm-home-reader-title"><span>いま読まれている</span><h2>第' + esc(fc.num) + '話:' + esc(fc.title) + "</h2><p>" + esc(ft.title) + "</p></div>" +
+        '<div class="mkm-reader-images">' + plist.slice(0, n).map(function (p, k) { return imgTag(p, k > 1); }).join("") + "</div>" +
         '<p class="mkm-home-reader-link"><a href="read.html?id=' + esc(ft.id) + "&ch=" + esc(fc.num) + '">この話を読む →</a></p></section>';
     }
+    root.innerHTML = '<div class="mkm-hero-slider" id="hero-slider" aria-label="Featured highlights">' + slides +
+      (S.slides.length > 1 ? '<div class="mkm-slider-controls" hidden><button type="button" class="mkm-slider-prev" aria-label="Previous slide">&#8592;</button><button type="button" class="mkm-slider-next" aria-label="Next slide">&#8594;</button></div>' : "") +
+      "</div>" +
+      '<div data-ad="home"></div>' + feat + latest + reader;
+    $$(".mkm-hero-slide", root).forEach(function (sl, i) { sl.hidden = i !== 0; });
     sidebar();
     paintAds();
     seo("OnePieceManga | オリジナル日本語マンガ無料連載",
@@ -338,6 +333,7 @@
             return { "@type": "ListItem", position: i + 1, url: DOMAIN + "/manga.html?id=" + t.id, name: t.title }; }) }
       ] });
   }
+
   function manga(id) {
     var t = find(id);
     var box = $("#detail");
