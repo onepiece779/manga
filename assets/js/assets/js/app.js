@@ -1,7 +1,7 @@
 /* =========================================================
    MKM Manga Pro — static port: content rendering
-   Theme ki asli CSS (mkm.css) + asli main.js reuse hota hai.
-   Ye file sirf data.js ka content pages me render karti hai.
+   Uses the theme's original CSS (mkm.css) and main.js.
+   This file renders content.json into each page.
    ========================================================= */
 (function () {
   "use strict";
@@ -15,7 +15,7 @@
   };
   var uri = function (svg) { return "data:image/svg+xml;utf8," + encodeURIComponent(svg.replace(/\s{2,}/g, " ")); };
 
-  /* ---------- placeholders (asli images aane tak) ---------- */
+  /* ---------- placeholder pages (until real images exist) ---------- */
   function coverSvg(t) {
     var a = (t.art && t.art.a) || "#9053ff", b = (t.art && t.art.b) || "#1a0b2e";
     var label = (t.art && t.art.label) || t.title.slice(0, 2).toUpperCase();
@@ -41,9 +41,9 @@
       '<g><ellipse cx="560" cy="190" rx="160" ry="70" fill="#fff" stroke="#191919" stroke-width="3"/>' +
       '<text x="560" y="182" text-anchor="middle" font-family="system-ui,sans-serif" font-size="24" fill="#191919">' + esc((t.voices && t.voices[(i - 1) % t.voices.length]) || "") + '</text>' +
       '<text x="560" y="216" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" fill="#777">' + esc(t.title) + '</text></g>' +
-      '<text x="400" y="688" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" fill="#888">asli image: assets/manga/' + esc(t.id) + '/ch-' + pad(num) + '/' + pad(i) + '.jpg</text></svg>');
+      '</svg>');
   }
-  /* asli pages aane tak: cover art se B&W manga page (inline SVG panels + bubble) */
+  /* until real pages exist: B&W manga page composed from cover art (inline SVG panels + bubble) */
   function pageInline(t, c, i, total) {
     var cv = cover(t);
     var crops = [[0,0,600,450],[0,450,600,450],[0,150,600,600],[150,0,450,675],[0,0,450,675],[150,225,450,675]];
@@ -64,11 +64,22 @@
       '<text x="545" y="' + (l2 ? 245 : 265) + '" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#111">' + esc(l1) + '</text>' +
       (l2 ? '<text x="545" y="288" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#111">' + esc(l2) + '</text>' : "") +
       "</g>";
+    var sents = (t.description || "").split(/。/).filter(function (s) { return s.trim(); });
+    var nar = (sents[(i - 1) % Math.max(sents.length, 1)] || "").trim();
+    var caption = "";
+    if (nar) {
+      var lines = [];
+      for (var k = 0; k < nar.length && lines.length < 3; k += 30) lines.push(nar.slice(k, k + 30));
+      caption = '<g><rect x="40" y="1000" width="720" height="' + (lines.length * 34 + 30) + '" fill="#fff" stroke="#111" stroke-width="3"/>' +
+        lines.map(function (ln, xi) {
+          return '<text x="60" y="' + (1035 + xi * 34) + '" font-family="system-ui,sans-serif" font-size="24" fill="#111">' + esc(ln) + "</text>";
+        }).join("") + "</g>";
+    }
     return '<svg class="mkm-page" viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + esc(t.title) + ' page ' + i + '">' +
       '<rect width="800" height="1200" fill="#fdfdf8"/>' +
       '<text x="40" y="58" font-family="system-ui,sans-serif" font-size="30" font-weight="800" fill="#111">' + esc(t.title) + " — 第" + esc(c.num) + "話 " + esc(c.title) + "</text>" +
-      panels + bubble +
-      '<text x="760" y="1170" text-anchor="end" font-family="system-ui,sans-serif" font-size="22" fill="#666">' + i + " / " + total + "</text>" +
+      panels + bubble + caption +
+      '<text x="760" y="1185" text-anchor="end" font-family="system-ui,sans-serif" font-size="22" fill="#666">' + i + " / " + total + "</text>" +
       "</svg>";
   }
   function imgTag(p, lazy) {
@@ -109,7 +120,7 @@
   function latestCh(t) { return chs(t)[0]; }
   function firstCh(t) { return chs(t).slice(-1)[0]; }
   function views(n) { return n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "K" : String(n || 0); }
-  function date(s) { var d = new Date(s + "T00:00:00"); return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }); }
+  function date(s) { var d = new Date(s + "T00:00:00"); return d.toLocaleDateString("ja-JP", { day: "numeric", month: "short", year: "numeric" }); }
   function genres() {
     var set = {};
     S.titles.forEach(function (t) { (t.genres || []).forEach(function (g) { set[g] = 1; }); });
@@ -141,6 +152,11 @@
     return fetch("assets/style.json").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
       if (!j) return;
       Object.keys(map).forEach(function (k) { if (j[k]) document.documentElement.style.setProperty(map[k], j[k]); });
+      if (j.gridMin) {
+        var g = document.createElement("style");
+        g.textContent = ".mkm-grid{grid-template-columns:repeat(auto-fill,minmax(" + (Number(j.gridMin) || 180) + "px,1fr))}";
+        document.head.appendChild(g);
+      }
     }).catch(function () {});
   }
   function loadAds() {
@@ -153,7 +169,7 @@
     if (!ADS || !ADS.enabled) return "";
     var s = ADS.slots && ADS.slots[slot];
     if (!s || !s.on || !s.code) return "";
-    return '<div class="mkm-ad mkm-ad-' + slot + '"><span class="mkm-ad-label">Advertisement</span>' + s.code + "</div>";
+    return '<div class="mkm-ad mkm-ad-' + slot + '"><span class="mkm-ad-label">広告</span>' + s.code + "</div>";
   }
   function paintAds() {
     $$("[data-ad]").forEach(function (el) {
@@ -199,6 +215,8 @@
   function chrome() {
     $$("[data-year]").forEach(function (n) { n.textContent = new Date().getFullYear(); });
     $$(".mkm-footer-about").forEach(function (n) { n.textContent = S.tagline; });
+    var fg = $(".mkm-footer-genres");
+    if (fg) fg.innerHTML = genres().slice(0, 8).map(function (g) { return '<li><a href="search.html?s=' + encodeURIComponent(g) + '">' + esc(g) + "</a></li>"; }).join("");
     var soc = $(".mkm-social");
     if (soc) soc.innerHTML = S.social.map(function (s) {
       return '<a href="' + esc(s.url) + '" rel="noopener">' + esc(s.label) + "</a>";
@@ -210,10 +228,10 @@
     var el = $(".mkm-sidebar");
     if (!el) return;
     el.innerHTML =
-      '<div class="mkm-widget"><h3 class="mkm-widget-title">Genres</h3><div class="mkm-genre-list">' +
+      '<div class="mkm-widget"><h3 class="mkm-widget-title">ジャンル</h3><div class="mkm-genre-list">' +
       genres().map(function (g) { return '<a href="search.html?s=' + encodeURIComponent(g) + '">' + esc(g) + "</a>"; }).join("") +
       '</div></div>' +
-      '<div class="mkm-widget"><h3 class="mkm-widget-title">Latest Updates</h3><ul class="mkm-latest-list">' +
+      '<div class="mkm-widget"><h3 class="mkm-widget-title">最新話</h3><ul class="mkm-latest-list">' +
       allChapters().slice(0, 6).map(function (x) {
         return '<li><img src="' + cover(x.t) + '" onerror="this.onerror=null;this.src=\'' + coverSvg(x.t) + '\'" alt="" loading="lazy" width="44" height="58">' +
           '<div><p class="t"><a href="manga.html?id=' + esc(x.t.id) + '">' + esc(x.t.title) + "</a></p>" +
@@ -231,7 +249,8 @@
       (lc ? '<span class="mkm-card-chapter">Ch. ' + esc(lc.num) + "</span>" : "") + "</div></a>" +
       '<div class="mkm-card-body"><h3 class="mkm-card-title"><a href="manga.html?id=' + esc(t.id) + '">' + esc(t.title) + "</a></h3>" +
       '<div class="mkm-card-genres">' + g.map(function (x) { return '<a class="mkm-genre" href="search.html?s=' + encodeURIComponent(x) + '">' + esc(x) + "</a>"; }).join("") + "</div>" +
-      '<div class="mkm-card-meta"><span>' + esc(t.status || "Ongoing") + '</span><a class="mkm-card-link" href="read.html?id=' + esc(t.id) + "&ch=" + (lc ? lc.num : 1) + '">Read →</a></div></div></article>';
+      '<p class="mkm-card-excerpt">' + esc((t.description || "").slice(0, 96)) + '…</p>' +
+      '<div class="mkm-card-meta"><span>' + esc(t.status || "連載中") + '</span><a class="mkm-card-link" href="read.html?id=' + esc(t.id) + "&ch=" + (lc ? lc.num : 1) + '">読む →</a></div></div></article>';
   }
   /* related posts: shared genre */
   function related(t) {
@@ -239,71 +258,58 @@
       return x.id !== t.id && (x.genres || []).some(function (g) { return (t.genres || []).indexOf(g) > -1; });
     }).slice(0, 4);
     if (!rel.length) return "";
-    return '<div class="mkm-section" style="margin-top:26px"><div class="mkm-section-head">' +
-      '<div><h2 class="mkm-title">Related Manga / 関連作品</h2><p class="mkm-subtitle">Because you read ' + esc(t.title) + '</p></div></div>' +
+    return '<div class="mkm-section" id="mkm-rel" style="margin-top:26px"><div class="mkm-section-head">' +
+      '<div><h2 class="mkm-title">関連作品</h2><p class="mkm-subtitle">「' + esc(t.title) + '」を読んだあなたへ</p></div></div>' +
       '<div class="mkm-grid">' + rel.map(card).join("") + "</div></div>";
   }
 
   /* ================= HOME ================= */
   function home() {
-    var slider = $("#hero-slider");
-    if (slider) {
-      slider.innerHTML = S.slides.map(function (s, i) {
-        var t = find(s.titleId) || S.titles[0];
-        return '<section class="mkm-hero mkm-hero-slide' + (i ? "" : "") + '" style="--mkm-hero-bg:url(&quot;' + bg(t) + '&quot;)">' +
-          '<div class="mkm-container mkm-hero-inner">' +
-          '<div class="mkm-hero-cover"><img src="' + cover(t) + '" onerror="this.onerror=null;this.src=\'' + coverSvg(t) + '\'" alt="' + esc(t.title) + ' cover"' + (i ? ' loading="lazy"' : "") + '></div>' +
-          '<div class="mkm-hero-content">' +
-          (s.badge ? '<span class="mkm-badge">' + esc(s.badge) + "</span>" : "") +
-          "<h1>" + esc(s.title) + "</h1><p>" + esc(s.text) + "</p>" +
-          '<div class="mkm-hero-actions">' +
-          (s.btn1 ? '<a class="mkm-btn" href="' + esc(s.btn1.href) + '">' + esc(s.btn1.label) + "</a>" : "") +
-          (s.btn2 ? '<a class="mkm-btn mkm-btn-ghost" href="' + esc(s.btn2.href) + '">' + esc(s.btn2.label) + "</a>" : "") +
-          "</div>" +
-          (s.stats ? '<div class="mkm-stats">' + s.stats.map(function (x) {
-            return '<div class="mkm-stat"><span class="mkm-stat-num">' + esc(x.num) + '</span><span class="mkm-stat-label">' + esc(x.label) + "</span></div>";
-          }).join("") + "</div>" : "") +
-          "</div></div></section>";
-      }).join("") +
-      (S.slides.length > 1 ? '<div class="mkm-slider-controls" hidden><button type="button" class="mkm-slider-prev" aria-label="Previous slide">&#8592;</button><button type="button" class="mkm-slider-next" aria-label="Next slide">&#8594;</button></div>' : "");
-      $$(".mkm-hero-slide", slider).forEach(function (sl, i) { sl.hidden = i !== 0; });
-    }
-
+    var root = $("#home-root");
+    if (!root) return;
+    var slides = S.slides.map(function (s, i) {
+      var t = find(s.titleId) || S.titles[0];
+      return '<section class="mkm-hero mkm-hero-slide' + (cover(t) ? " has-cover" : "") + '" style="--mkm-hero-bg:url(&quot;' + bg(t) + '&quot;)">' +
+        '<div class="mkm-container mkm-hero-inner">' +
+        '<div class="mkm-hero-cover"><img src="' + cover(t) + '" onerror="this.onerror=null;this.src=\'' + coverSvg(t) + '\'" alt="' + esc(t.title) + ' cover"' + (i ? ' loading="lazy"' : "") + '></div>' +
+        '<div class="mkm-hero-content">' +
+        (s.badge ? '<span class="mkm-badge">' + esc(s.badge) + "</span>" : "") +
+        "<h1>" + esc(s.title) + "</h1><p>" + esc(s.text) + "</p>" +
+        '<div class="mkm-hero-actions">' +
+        (s.btn1 ? '<a class="mkm-btn" href="' + esc(s.btn1.href) + '">' + esc(s.btn1.label) + "</a>" : "") +
+        (s.btn2 ? '<a class="mkm-btn mkm-btn-ghost" href="' + esc(s.btn2.href) + '">' + esc(s.btn2.label) + "</a>" : "") +
+        "</div>" +
+        (s.stats ? '<div class="mkm-stats">' + s.stats.map(function (x) {
+          return '<div class="mkm-stat"><span class="mkm-stat-num">' + esc(x.num) + '</span><span class="mkm-stat-label">' + esc(x.label) + "</span></div>";
+        }).join("") + "</div>" : "") +
+        "</div></div></section>";
+    }).join("");
     var f = S.feature, ft = find(f.mangaId), fc = ft ? chOf(ft, f.chapterNum) : null;
-    var feat = $("#feature");
-    if (feat && ft) {
-      feat.innerHTML = '<div class="mkm-container"><div class="mkm-layout mkm-feature-layout">' +
-        '<article class="mkm-feature-card"><h2>About ' + esc(ft.title) + '</h2>' +
-        '<div class="mkm-entry-content"><p>' + esc(ft.description) + "</p></div>" +
-        '<div class="mkm-feature-genres">' + ft.genres.map(function (g) { return '<a class="mkm-genre" href="search.html?s=' + encodeURIComponent(g) + '">' + esc(g) + "</a>"; }).join("") + "</div>" +
-        '<dl class="mkm-feature-meta">' +
-        ["Status:" + ft.status, "Type:" + ft.type, "Author:" + ft.author, "Artist:" + ft.artist].map(function (kv) {
-          var p = kv.split(":");
-          return "<div><dt>" + esc(p[0]) + "</dt><dd>" + esc(p.slice(1).join(":")) + "</dd></div>";
-        }).join("") + "</dl></article>" +
-        '<div class="mkm-sidebar"></div></div></div>';
-    }
-
-    var grid = $("#latest-grid");
-    if (grid) {
-      grid.innerHTML = allChapters().map(function (x) { return x.t; })
-        .filter(function (t, i, arr) { return arr.indexOf(t) === i; })
-        .slice(0, 8).map(card).join("");
-    }
-
-    var hr = $("#home-reader");
-    if (hr && ft && fc) {
+    var ordered = allChapters().map(function (x) { return x.t; }).filter(function (t, i, arr) { return arr.indexOf(t) === i; });
+    S.titles.forEach(function (t) { if (ordered.indexOf(t) === -1) ordered.push(t); });
+    var main = '<div class="mkm-container"><div class="mkm-layout"><div>' +
+      '<div class="mkm-section mkm-listing-section" id="latest"><div class="mkm-section-head">' +
+      '<div><h2 class="mkm-title">最新マンガ</h2><p class="mkm-subtitle">' + ordered.length + '作品のオリジナル連載 — 毎日更新中</p></div>' +
+      '<a class="mkm-btn mkm-btn-sm mkm-btn-ghost" href="search.html">すべて見る</a></div>' +
+      '<div class="mkm-grid">' + ordered.map(card).join("") + "</div></div>" +
+      '</div><div class="mkm-sidebar"></div></div></div>';
+    var reader = "";
+    if (ft && fc) {
       var plist = pageList(ft, fc);
       var n = Math.min(f.previewPages || 3, plist.length);
-      var imgs = plist.slice(0, n).map(function (p, k) { return imgTag(p, k > 1); });
-      hr.innerHTML = '<section class="mkm-container mkm-home-reader" id="reader" aria-label="Chapter reader">' +
-        '<div class="mkm-home-reader-title"><span>Now reading</span><h2>Chapter ' + esc(fc.num) + ": " + esc(fc.title) + "</h2><p>" + esc(ft.title) + "</p></div>" +
-        '<div class="mkm-reader-images">' + imgs.join("") + "</div>" +
-        '<p class="mkm-home-reader-link"><a href="read.html?id=' + esc(ft.id) + "&ch=" + esc(fc.num) + '">Open chapter →</a></p></section>';
+      reader = '<section class="mkm-container mkm-home-reader" id="reader" aria-label="Chapter reader">' +
+        '<div class="mkm-home-reader-title"><span>いま読まれている</span><h2>第' + esc(fc.num) + '話:' + esc(fc.title) + "</h2><p>" + esc(ft.title) + "</p></div>" +
+        '<div class="mkm-reader-images">' + plist.slice(0, n).map(function (p, k) { return imgTag(p, k > 1); }).join("") + "</div>" +
+        '<p class="mkm-home-reader-link"><a href="read.html?id=' + esc(ft.id) + "&ch=" + esc(fc.num) + '">この話を読む →</a></p></section>';
     }
+    root.innerHTML = '<div class="mkm-hero-slider" id="hero-slider" aria-label="Featured highlights">' + slides +
+      (S.slides.length > 1 ? '<div class="mkm-slider-controls" hidden><button type="button" class="mkm-slider-prev" aria-label="Previous slide">&#8592;</button><button type="button" class="mkm-slider-next" aria-label="Next slide">&#8594;</button></div>' : "") +
+      "</div>" +
+      '<div data-ad="home"></div>' + main + reader;
+    $$(".mkm-hero-slide", root).forEach(function (sl, i) { sl.hidden = i !== 0; });
     sidebar();
     paintAds();
-    seo(S.name + " — 日本語マンガ無料連載 | Read Free Japanese Manga Online",
+    seo("OnePieceManga | オリジナル日本語マンガ無料連載",
       S.tagline + " " + S.about.slice(0, 140),
       baseKw() + ", " + genres().join(", "),
       "/", "website", null,
@@ -315,13 +321,14 @@
             return { "@type": "ListItem", position: i + 1, url: DOMAIN + "/manga.html?id=" + t.id, name: t.title }; }) }
       ] });
   }
+
   function manga(id) {
     var t = find(id);
     var box = $("#detail");
     if (!box) return;
-    if (!t) { box.innerHTML = '<div class="mkm-container mkm-page"><p class="mkm-empty">Manga nahi mila. <a href="index.html">Home</a></p></div>'; return; }
+    if (!t) { box.innerHTML = '<div class="mkm-container mkm-page"><p class="mkm-empty">作品が見つかりません。<a href="index.html">ホームへ戻る</a></p></div>'; return; }
     document.title = t.title + " — " + S.name;
-    seo(t.title + " (" + (t.alt || "") + ") — 全話無料連載 | " + S.name,
+    seo(t.title + "(" + (t.alt || "") + ") 全話無料 | " + S.name,
       t.description.slice(0, 155),
       t.title + ", " + (t.alt || "") + ", " + t.genres.join(", ") + ", " + t.author + ", manga online free, 漫画 無料, " + baseKw(),
       "/manga.html?id=" + t.id, "book", t.cover,
@@ -336,29 +343,30 @@
     var r = resume(t.id);
     var lc = latestCh(t), fc = firstCh(t);
     box.innerHTML = '<div class="mkm-container mkm-page">' +
-      '<nav class="mkm-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="search.html?s=">Manga</a> <span>/</span> <span>' + esc(t.title) + "</span></nav>" +
+      '<nav class="mkm-breadcrumb" aria-label="Breadcrumb"><a href="index.html">ホーム</a> <span>/</span> <a href="search.html">作品一覧</a> <span>/</span> <span>' + esc(t.title) + "</span></nav>" +
+      '<nav class="mkm-toc" aria-label="目次"><span>目次:</span><a href="#mkm-syn">あらすじ</a><a href="#mkm-chs">話数リスト</a><a href="#mkm-rel">関連作品</a></nav>' +
       '<div class="mkm-layout"><div>' +
       '<div class="mkm-single">' +
       '<div class="mkm-cover"><img src="' + cover(t) + '" onerror="this.onerror=null;this.src=\'' + coverSvg(t) + '\'" alt="' + esc(t.title) + ' cover" width="280" height="420"></div>' +
       '<div class="mkm-info"><h1>' + esc(t.title) + '</h1><p class="alt">' + esc(t.alt || "") + "</p>" +
       '<div class="mkm-meta">' +
-      '<span class="mkm-meta-item"><b>Status:</b> ' + esc(t.status) + "</span>" +
-      '<span class="mkm-meta-item"><b>Type:</b> ' + esc(t.type) + "</span>" +
-      '<span class="mkm-meta-item"><b>Author:</b> ' + esc(t.author) + "</span>" +
-      '<span class="mkm-meta-item"><b>Artist:</b> ' + esc(t.artist) + "</span>" +
-      '<span class="mkm-meta-item"><b>Year:</b> ' + esc(t.year) + "</span>" +
-      '<span class="mkm-meta-item"><b>Rating:</b> ★ ' + esc(t.rating) + "</span>" +
-      '<span class="mkm-meta-item"><b>Views:</b> ' + views(t.views) + "</span></div>" +
+      '<span class="mkm-meta-item"><b>ステータス:</b> ' + esc(t.status) + "</span>" +
+      '<span class="mkm-meta-item"><b>タイプ:</b> ' + esc(t.type) + "</span>" +
+      '<span class="mkm-meta-item"><b>作者:</b> ' + esc(t.author) + "</span>" +
+      '<span class="mkm-meta-item"><b>漫画:</b> ' + esc(t.artist) + "</span>" +
+      '<span class="mkm-meta-item"><b>開始年:</b> ' + esc(t.year) + "</span>" +
+      '<span class="mkm-meta-item"><b>評価:</b> ★ ' + esc(t.rating) + "</span>" +
+      '<span class="mkm-meta-item"><b>閲覧数:</b> ' + views(t.views) + "</span></div>" +
       '<div class="mkm-card-genres">' + t.genres.map(function (g) { return '<a class="mkm-genre" href="search.html?s=' + encodeURIComponent(g) + '">' + esc(g) + "</a>"; }).join("") + "</div>" +
       '<div class="mkm-hero-actions" style="margin-top:16px">' +
-      (r ? '<a class="mkm-btn" href="read.html?id=' + esc(t.id) + "&ch=" + esc(r.ch) + '">Continue Ch. ' + esc(r.ch) + "</a>" : "") +
-      '<a class="mkm-btn' + (r ? " mkm-btn-ghost" : "") + '" href="read.html?id=' + esc(t.id) + "&ch=" + (fc ? fc.num : 1) + '">Read first chapter</a>' +
-      '<a class="mkm-btn mkm-btn-ghost" href="read.html?id=' + esc(t.id) + "&ch=" + (lc ? lc.num : 1) + '">Latest Ch. ' + (lc ? esc(lc.num) : "") + "</a></div>" +
-      '<div class="mkm-description"><h3>Synopsis</h3><p>' + esc(t.description) + "</p></div>" +
+      (r ? '<a class="mkm-btn" href="read.html?id=' + esc(t.id) + '&ch=' + esc(r.ch) + '>続きから 第' + esc(r.ch) + '話</a>' : "") +
+      '<a class="mkm-btn' + (r ? " mkm-btn-ghost" : "") + '" href="read.html?id=' + esc(t.id) + "&ch=" + (fc ? fc.num : 1) + '">第1話から読む</a>' +
+      '<a class="mkm-btn mkm-btn-ghost" href="read.html?id=' + esc(t.id) + "&ch=" + (lc ? lc.num : 1) + '">最新話 第' + (lc ? esc(lc.num) : "") + '話</a></div>' +
+      '<div class="mkm-description" id="mkm-syn"><h3>あらすじ</h3><p>' + esc(t.description) + "</p></div>" +
       "</div></div>" +
-      '<div class="mkm-chapter-list" style="margin-top:20px"><div class="mkm-chapter-list-head"><h3>Chapters</h3><span>' + chs(t).length + " chapters</span></div><ul>" +
+      '<div class="mkm-chapter-list" id="mkm-chs" style="margin-top:20px"><div class="mkm-chapter-list-head"><h3>話数リスト</h3><span>' + chs(t).length + '話収録</span></div><ul>' +
       chs(t).map(function (c) {
-        return '<li' + (r && r.ch === c.num ? ' class="is-current"' : "") + '><a href="read.html?id=' + esc(t.id) + "&ch=" + esc(c.num) + '"><span class="num">Ch. ' + esc(c.num) + '</span><span>' + esc(c.title) + '</span><span class="date">' + esc(date(c.date)) + ' · ' + esc(c.pages || (c.images || []).length) + "p</span></a></li>";
+        return '<li' + (r && r.ch === c.num ? ' class="is-current"' : "") + '><a href="read.html?id=' + esc(t.id) + '&ch=' + esc(c.num) + '"><span class="num">第' + esc(c.num) + '話</span><span>' + esc(c.title) + '</span><span class="date">' + esc(date(c.date)) + ' · ' + esc(c.pages || (c.images || []).length) + 'ページ</span></a></li>';
       }).join("") + "</ul></div>" +
       related(t) +
       "</div><div class=\"mkm-sidebar\"></div></div></div>";
@@ -371,10 +379,10 @@
     var t = find(id);
     var stage = $("#reader-stage");
     if (!stage) return;
-    if (!t) { stage.innerHTML = '<p class="mkm-empty">Manga nahi mila.</p>'; return; }
+    if (!t) { stage.innerHTML = '<p class="mkm-empty">作品が見つかりません。</p>'; return; }
     var list = chs(t), c = chOf(t, num), idx = list.indexOf(c);
     document.title = t.title + " Ch. " + c.num + " — " + S.name;
-    seo(t.title + " 第" + c.num + "話 「" + c.title + "」 を読む | " + S.name,
+    seo(t.title + " 第" + c.num + "話「" + c.title + "」| " + S.name,
       t.title + " 第" + c.num + "話 " + c.title + " — read online free at onepiecemanga.mkm.fan. " + t.description.slice(0, 90),
       t.title + " 第" + c.num + "話, " + t.title + " read online, manga chapter japanese, " + baseKw(),
       "/read.html?id=" + t.id + "&ch=" + c.num, "article", t.cover,
@@ -384,13 +392,13 @@
       ] });
     remember(t.id, c.num);
 
-    $("#r-title").innerHTML = 'Chapter ' + esc(c.num) + ": " + esc(c.title) +
+    $("#r-title").innerHTML = '第' + esc(c.num) + '話:' + esc(c.title) +
       ' <span style="color:var(--mkm-muted);font-size:.85rem">· <a href="manga.html?id=' + esc(t.id) + '">' + esc(t.title) + "</a></span>";
     $("#all-ch").href = "manga.html?id=" + encodeURIComponent(t.id);
 
     var sel = $("#ch-select");
     sel.innerHTML = list.map(function (x) {
-      return '<option value="' + esc(x.num) + '"' + (x.num === c.num ? " selected" : "") + ">Chapter " + esc(x.num) + " — " + esc(x.title) + "</option>";
+      return '<option value="' + esc(x.num) + '"' + (x.num === c.num ? " selected" : "") + ">第' + esc(x.num) + '話 ' + esc(x.title) + '</option>";
     }).join("");
     sel.onchange = function () { location.href = "read.html?id=" + t.id + "&ch=" + sel.value; };
 
@@ -412,12 +420,12 @@
       } else {
         imgsEl.innerHTML = imgTag(pages[cur], false);
       }
-      $("#p-count").textContent = "Page " + (mode === "paged" ? cur + 1 : 1) + " / " + pages.length;
-      $("#mode-btn").textContent = mode === "strip" ? "Switch: paged" : "Switch: long strip";
+      $("#p-count").textContent = (mode === "paged" ? cur + 1 : 1) + " / " + pages.length + " ページ";
+      $("#mode-btn").textContent = mode === "strip" ? "ページ表示へ切替" : "縦スクロールへ切替";
       $("#pg-prev").hidden = mode !== "paged";
       $("#pg-next").hidden = mode !== "paged";
       $("#width-btn").hidden = mode !== "strip";
-      $("#width-btn").textContent = "Width: " + (width || "normal");
+      $("#width-btn").textContent = "幅:" + (width === "narrow" ? "狭" : width === "wide" ? "広" : "標準");
       var pb = $("#ch-prev"); pb.disabled = idx >= list.length - 1;
       var nb = $("#ch-next"); nb.disabled = idx <= 0;
     }
@@ -459,8 +467,8 @@
     var box = $("#results");
     if (!box) return;
     var term = (q || "").trim().toLowerCase();
-    $("#q-label").textContent = term ? 'Search results for “' + q + '”' : "Browse all manga";
-    seo((term ? q + " — 検索結果 | " : "Browse All Manga / 作品一覧 | ") + S.name,
+    $("#q-label").textContent = term ? '「' + q + '」の検索結果' : "全作品一覧";
+    seo((term ? "「" + q + "」検索結果 | " : "作品一覧 | ") + S.name,
       "Search and browse " + S.titles.length + " original Japanese manga series with free online chapters. 全作品一覧・検索。",
       (term ? q + ", " : "") + "manga list, browse manga, manga genres, 作品一覧, " + baseKw(),
       "/search.html" + (term ? "?s=" + encodeURIComponent(q) : ""), "website", null,
@@ -476,9 +484,9 @@
             "<h2><a href=\"manga.html?id=" + esc(t.id) + '">' + esc(t.title) + "</a></h2>" +
             '<div class="mkm-card-genres">' + t.genres.map(function (g) { return '<a class="mkm-genre" href="search.html?s=' + encodeURIComponent(g) + '">' + esc(g) + "</a>"; }).join("") + "</div>" +
             '<p class="mkm-search-excerpt">' + esc(t.description.slice(0, 160)) + "…</p>" +
-            '<p class="mkm-card-meta"><span>' + (lc ? "Latest: Ch. " + esc(lc.num) + " · " + esc(date(lc.date)) : "") + '</span><a class="mkm-card-link" href="manga.html?id=' + esc(t.id) + '">Open →</a></p></article>';
+            '<p class="mkm-card-meta"><span>' + (lc ? "最新:第" + esc(lc.num) + "話 · " + esc(date(lc.date)) : "") + '</span><a class="mkm-card-link" href="manga.html?id=' + esc(t.id) + '">開く →</a></p></article>';
         }).join("") + "</div>"
-      : '<p class="mkm-empty">Koi result nahi mila “' + esc(q) + '” ke liye.</p>';
+      : '<p class="mkm-empty">「' + esc(q) + '」に一致する作品がありませんでした。</p>';
     sidebar();
     paintAds();
   }
@@ -486,7 +494,9 @@
   /* ---------- boot ---------- */
   Promise.all([loadContent(), loadAds(), loadStyle()]).then(function () {
     var css = document.createElement("style");
-    css.textContent = ".mkm-reader-images>svg.mkm-page{width:100%;height:auto;margin:0 auto 10px;border-radius:6px;background:#fdfdf8;display:block}" +
+    css.textContent = ".mkm-toc{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 4px;font-size:.84rem}.mkm-toc span{color:var(--mkm-muted);font-weight:700}.mkm-toc a{color:var(--mkm-accent-2);text-decoration:none;border:1px solid var(--mkm-border);border-radius:999px;padding:4px 12px;background:var(--mkm-surface)}.mkm-footer-grid.has-four{grid-template-columns:1.5fr 1fr 1fr 1fr}@media(max-width:900px){.mkm-footer-grid.has-four{grid-template-columns:1fr 1fr}}" +
+      ".mkm-card-excerpt{color:var(--mkm-muted);font-size:.78rem;line-height:1.45;margin:7px 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}" +
+      ".mkm-reader-images>svg.mkm-page{width:100%;height:auto;margin:0 auto 10px;border-radius:6px;background:#fdfdf8;display:block}" +
       ".mkm-reader-images.is-paged>svg.mkm-page{width:auto;max-width:100%;max-height:80vh}" +
       ".mkm-home-reader .mkm-reader-images>svg.mkm-page{margin:0 auto;border-radius:0}" +
       ".mkm-home-reader .mkm-reader-images>svg.mkm-page:first-child{border-radius:8px 8px 0 0}";
@@ -500,7 +510,7 @@
     else if (p === "search") search(q.get("s") || "");
   }).catch(function (e) {
     var m = document.querySelector(".mkm-main");
-    if (m) m.innerHTML = '<div class="mkm-container mkm-page"><p class="mkm-empty">Content load nahi hua: ' +
-      (e && e.message ? e.message : "") + " — assets/content.json mojood hai ya nahi dekhein.</p></div>";
+    if (m) m.innerHTML = '<div class="mkm-container mkm-page"><p class="mkm-empty">コンテンツを読み込めませんでした: ' +
+      (e && e.message ? e.message : "") + "</p></div>";
   });
 })();
