@@ -5,7 +5,7 @@
    ========================================================= */
 (function () {
   "use strict";
-  var S = window.SITE;
+  var S = null;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = function (s) {
@@ -93,6 +93,11 @@
 
   /* ---------- ADS (assets/ads.json = control panel) ---------- */
   var ADS = null;
+  function loadContent() {
+    return fetch("assets/content.json")
+      .then(function (r) { if (!r.ok) throw new Error("content.json"); return r.json(); })
+      .then(function (j) { S = j; window.SITE = j; });
+  }
   function loadAds() {
     return fetch("assets/ads.json")
       .then(function (r) { return r.ok ? r.json() : null; })
@@ -362,7 +367,7 @@
   }
 
   /* ---------- boot ---------- */
-  loadAds().then(function () {
+  Promise.all([loadContent(), loadAds()]).then(function () {
     chrome();
     var p = document.body.dataset.page;
     var q = new URLSearchParams(location.search);
@@ -370,5 +375,9 @@
     else if (p === "manga") manga(q.get("id"));
     else if (p === "read") reader(q.get("id"), q.get("ch") || 1);
     else if (p === "search") search(q.get("s") || "");
+  }).catch(function (e) {
+    var m = document.querySelector(".mkm-main");
+    if (m) m.innerHTML = '<div class="mkm-container mkm-page"><p class="mkm-empty">Content load nahi hua: ' +
+      (e && e.message ? e.message : "") + " — assets/content.json mojood hai ya nahi dekhein.</p></div>";
   });
 })();

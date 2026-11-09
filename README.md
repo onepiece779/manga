@@ -98,6 +98,23 @@ chapters: [
 hon to unhe **Cloudflare R2** (free 10 GB) ya kisi CDN pe rakhein aur `cover` / page paths
 wohan ke URLs dein (`dir: "https://cdn.example.com/mera-manga/ch-001/"`).
 
+## Admin Panel (Decap CMS) — `/admin`
+Site ka poora content (`assets/content.json`) aur ads (`assets/ads.json`) browser ke
+admin panel se edit hote hain. Login = **aapka GitHub account** (koi alag password nahi).
+
+Setup (ek baar, ~15 minute):
+1. **Cloudflare Worker**: dash.cloudflare.com → Workers & Pages → Create → Hello World →
+   code me `oauth-worker.js` ka content paste karein → Save & Deploy → worker URL copy karein
+2. Worker → **Settings → Variables** me 3 variables:
+   `GH_CLIENT_ID`, `GH_CLIENT_SECRET`, `CMS_URL` (= `https://aapki-domain/admin/`)
+3. **GitHub OAuth App**: github.com → Settings → Developer settings → OAuth Apps →
+   New OAuth App → Homepage: `https://aapki-domain/`,
+   Callback: `https://WORKER-URL/callback` → Create → Client ID + Secret copy karein
+4. Repo me `admin/config.yml` khol kar `base_url:` me apna worker URL likhein → commit
+5. `https://aapki-domain/admin/` kholein → **Login with GitHub** → panel ready
+
+Panel se Save = GitHub commit = site ~1 minute me update.
+
 ## Ads (theme jaisa slot system)
 Control file: **`assets/ads.json`** — yahi aapka "ads panel" hai.
 
