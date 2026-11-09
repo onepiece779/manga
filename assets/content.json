@@ -1,7 +1,7 @@
 {
-  "name": "MKM Static",
-  "tagline": "Your daily source for the latest manga chapters.",
-  "about": "MKM Static is a demo library built on the MKM Manga Pro look. Yahan sirf original / licensed / public-domain titles rakhein.",
+  "name": "OnePieceManga",
+  "tagline": "毎日更新・日本語マンガ無料連載 — Read original Japanese manga free, every day.",
+  "about": "OnePieceManga (onepiecemanga.mkm.fan) is an independent, fan-operated reading library of ORIGINAL Japanese-language manga. We are not affiliated with any existing franchise or publisher; only original, licensed or public-domain works are published here. 当サイトはオリジナル作品のみを掲載する独立系の無料マンガ図書館です。",
   "social": [
     {
       "label": "Telegram",
@@ -17,303 +17,1015 @@
     }
   ],
   "cta": {
-    "label": "Start Reading",
+    "label": "読みはじめる / Start Reading",
     "url": "#latest"
   },
   "slides": [
     {
-      "titleId": "neon-ronin",
-      "badge": "Featured",
-      "title": "Your next story starts here",
-      "text": "Dive into a world of unforgettable tales. Explore. Read. Get hooked. New chapters, every day.",
+      "titleId": "hekikai-no-requiem",
+      "badge": "Featured / 注目",
+      "title": "碧海のレクイエム — 七つの海へ",
+      "text": "嵐の夜に沈んだ伝説の海賊船の鐘が、再び鳴った。少年カイの海洋冒険譚、開幕。New chapters every day.",
       "btn1": {
-        "label": "Start Reading",
-        "href": "read.html?id=neon-ronin&ch=5"
+        "label": "第5話を読む / Read Ch. 5",
+        "href": "read.html?id=hekikai-no-requiem&ch=5"
       },
       "btn2": {
-        "label": "Explore Manga",
-        "href": "manga.html?id=neon-ronin"
+        "label": "作品ページ / Details",
+        "href": "manga.html?id=hekikai-no-requiem"
       },
       "stats": [
         {
-          "num": "6",
-          "label": "Manga"
+          "num": "20",
+          "label": "Manga / 作品"
         },
         {
-          "num": "18",
-          "label": "Chapters"
+          "num": "60",
+          "label": "Chapters / 話"
         },
         {
-          "num": "128K+",
-          "label": "Readers"
+          "num": "210K+",
+          "label": "Readers / 読者"
         }
       ]
     },
     {
-      "titleId": "desert-fox",
-      "badge": "Trending",
-      "title": "Desert Fox — the courier saga",
-      "text": "Cholistan ki ret ke neeche dafan ek purani sadak, aur ek courier jo kabhi pakda nahi gaya.",
+      "titleId": "dennou-samurai-kagura",
+      "badge": "Trending / 急上昇",
+      "title": "電脳侍 KAGURA — 記憶を斬り取り戻せ",
+      "text": "電脳江戸2077。自分の過去を売った侍が、データ天守閣の将軍AIに挑む。サイバー時代劇、最新話公開中。",
       "btn1": {
-        "label": "Read Chapter 21",
-        "href": "read.html?id=desert-fox&ch=21"
+        "label": "第7話を読む / Read Ch. 7",
+        "href": "read.html?id=dennou-samurai-kagura&ch=7"
       }
     }
   ],
   "feature": {
-    "mangaId": "crimson-blade",
-    "chapterId": "crimson-blade",
-    "chapterNum": 12,
+    "mangaId": "hekikai-no-requiem",
+    "chapterId": "hekikai-no-requiem",
+    "chapterNum": 5,
     "previewPages": 3
   },
   "titles": [
     {
-      "id": "crimson-blade",
-      "title": "Crimson Blade",
-      "alt": "紅の刃",
-      "author": "Ayaan Rehman",
-      "artist": "Ayaan Rehman",
-      "status": "Ongoing",
+      "id": "hekikai-no-requiem",
+      "title": "碧海のレクイエム",
+      "alt": "Hekikai no Requiem / Requiem of the Azure Sea",
+      "author": "蒼井タケル",
+      "artist": "蒼井タケル",
+      "status": "連載中",
       "type": "Manga",
       "year": 2024,
       "genres": [
-        "Action",
-        "Fantasy",
-        "Adventure"
+        "冒険",
+        "アクション",
+        "ファンタジー"
       ],
       "rating": 4.8,
       "views": 1284300,
-      "description": "Ek chhote se gaon ka lohara jab apni banayi talwar ko khoon se range dekhta hai, to use pata chalta hai ke ye blade sirf hathiyar nahi — ek qaid hai. Ab har raat wo apne andar ke saaye se larta hai.",
-      "art": {
-        "a": "#9053ff",
-        "b": "#2b0d4a",
-        "label": "CB"
-      },
-      "chapters": [
-        {
-          "num": 12,
-          "title": "The Forge Remembers",
-          "date": "2026-11-05",
-          "pages": 6,
-          "dir": "assets/manga/crimson-blade/ch-012/"
-        },
-        {
-          "num": 11,
-          "title": "Blood on the Anvil",
-          "date": "2026-10-28",
-          "pages": 6,
-          "dir": "assets/manga/crimson-blade/ch-011/"
-        },
-        {
-          "num": 10,
-          "title": "The Quiet Village",
-          "date": "2026-10-21",
-          "pages": 6,
-          "dir": "assets/manga/crimson-blade/ch-010/"
-        }
-      ]
-    },
-    {
-      "id": "starlight-academy",
-      "title": "Starlight Academy",
-      "alt": "スターライト学園",
-      "author": "Hina Malik",
-      "artist": "Studio Noor",
-      "status": "Ongoing",
-      "type": "Manhwa",
-      "year": 2025,
-      "genres": [
-        "School",
-        "Romance",
-        "Slice of Life"
+      "description": "嵐の夜に沈んだ伝説の海賊船「レクイエム号」。その鐘の音が再び海に響いたとき、港町リスの少年カイは父の残した羅針盤が光り出すのを見る。七つの海を巡る、冒険と絆の海洋冒険譚、開幕。",
+      "voices": [
+        "海が呼んでいる…！",
+        "恐れるな、帆を上げろ！"
       ],
-      "rating": 4.5,
-      "views": 842100,
-      "description": "Sheher ke sabse purane school ki chhat pe ek telescope hai, aur us telescope ke peeche ek raaz. Do ajnabi, ek hi raat, aur sitaron ka ek naksha jo kisi ne 40 saal pehle chhupa diya tha.",
       "art": {
         "a": "#12d4e7",
         "b": "#062a3a",
-        "label": "SA"
-      },
-      "chapters": [
-        {
-          "num": 8,
-          "title": "The Roof Key",
-          "date": "2026-11-07",
-          "pages": 6,
-          "dir": "assets/manga/starlight-academy/ch-008/"
-        },
-        {
-          "num": 7,
-          "title": "Forty Years Late",
-          "date": "2026-10-31",
-          "pages": 6,
-          "dir": "assets/manga/starlight-academy/ch-007/"
-        }
-      ]
-    },
-    {
-      "id": "desert-fox",
-      "title": "Desert Fox",
-      "alt": "صحرائی لومڑی",
-      "author": "Bilal Qureshi",
-      "artist": "Bilal Qureshi",
-      "status": "Ongoing",
-      "type": "Manga",
-      "year": 2023,
-      "genres": [
-        "Action",
-        "Drama",
-        "Historical"
-      ],
-      "rating": 4.9,
-      "views": 2104800,
-      "description": "Cholistan ke ret ke teelon ke neeche dafan ek purani sadak, aur us sadak pe chalne wala ek courier jo kabhi pakda nahi gaya. 1947 ki sardiyon ki kahani, jahan har parcel ke andar kisi ki zindagi hoti thi.",
-      "art": {
-        "a": "#ffb347",
-        "b": "#4a2b06",
-        "label": "DF"
-      },
-      "chapters": [
-        {
-          "num": 21,
-          "title": "The Last Courier",
-          "date": "2026-11-03",
-          "pages": 6,
-          "dir": "assets/manga/desert-fox/ch-021/"
-        },
-        {
-          "num": 20,
-          "title": "Sand and Cipher",
-          "date": "2026-10-24",
-          "pages": 6,
-          "dir": "assets/manga/desert-fox/ch-020/"
-        },
-        {
-          "num": 19,
-          "title": "A Train to Nowhere",
-          "date": "2026-10-15",
-          "pages": 6,
-          "dir": "assets/manga/desert-fox/ch-019/"
-        }
-      ]
-    },
-    {
-      "id": "neon-ronin",
-      "title": "Neon Ronin",
-      "alt": "ネオン浪人",
-      "author": "Zain Abbas",
-      "artist": "Kira Labs",
-      "status": "Ongoing",
-      "type": "Manhua",
-      "year": 2026,
-      "genres": [
-        "Sci-Fi",
-        "Action",
-        "Cyberpunk"
-      ],
-      "rating": 4.6,
-      "views": 596700,
-      "description": "2089, Karachi. Sheher ke neeche basne wale data-bazaaron me ek bekas samurai apni yaadein bechta hai — kyunki yaad rakhna ab sabse mehnga jurm hai.",
-      "art": {
-        "a": "#12d4e7",
-        "b": "#101c3a",
-        "label": "NR"
+        "label": "碧"
       },
       "chapters": [
         {
           "num": 5,
-          "title": "Memory Market",
-          "date": "2026-11-08",
-          "pages": 6,
-          "dir": "assets/manga/neon-ronin/ch-005/"
+          "title": "出航の鐘",
+          "date": "2026-11-09",
+          "pages": 6
         },
         {
           "num": 4,
-          "title": "Ghost Signal",
-          "date": "2026-11-01",
-          "pages": 6,
-          "dir": "assets/manga/neon-ronin/ch-004/"
-        }
-      ]
-    },
-    {
-      "id": "moonlit-bakery",
-      "title": "The Moonlit Bakery",
-      "alt": "月明かりのパン屋",
-      "author": "Sana Iqbal",
-      "artist": "Sana Iqbal",
-      "status": "Completed",
-      "type": "Manga",
-      "year": 2022,
-      "genres": [
-        "Slice of Life",
-        "Comedy",
-        "Supernatural"
-      ],
-      "rating": 4.4,
-      "views": 388200,
-      "description": "Raat 2 baje khulne wali ek bakery, jahan bread khareedne wale sab insaan nahi hote. Aur baker ko is se koi masla nahi — bas payment chandi ke sikkon me chahiye.",
-      "art": {
-        "a": "#7ce3a8",
-        "b": "#0c2e21",
-        "label": "MB"
-      },
-      "chapters": [
-        {
-          "num": 30,
-          "title": "Last Order (Final)",
-          "date": "2026-09-12",
-          "pages": 6,
-          "dir": "assets/manga/moonlit-bakery/ch-030/"
+          "title": "嵐の海の約束",
+          "date": "2026-11-02",
+          "pages": 6
         },
         {
-          "num": 29,
-          "title": "The Silver Coin",
-          "date": "2026-09-05",
-          "pages": 6,
-          "dir": "assets/manga/moonlit-bakery/ch-029/"
+          "num": 3,
+          "title": "港町の秘密",
+          "date": "2026-10-26",
+          "pages": 6
         }
-      ]
+      ],
+      "cover": "assets/covers/hekikai-no-requiem.jpg"
     },
     {
-      "id": "silent-cartographer",
-      "title": "The Silent Cartographer",
-      "alt": "خامش نقشہ نگار",
-      "author": "Omar Farooq",
-      "artist": "Omar Farooq",
-      "status": "Ongoing",
+      "id": "hoshikuzu-no-kenshi",
+      "title": "星屑の剣士",
+      "alt": "Hoshikuzu no Kenshi / Stardust Swordsman",
+      "author": "南野カズサ",
+      "artist": "南野カズサ",
+      "status": "連載中",
       "type": "Manga",
       "year": 2025,
       "genres": [
-        "Mystery",
-        "Adventure",
-        "Drama"
+        "アクション",
+        "ファンタジー",
+        "SF"
       ],
       "rating": 4.7,
-      "views": 701950,
-      "description": "Ek goonga naqsha-nigaar jo un jagahon ke naqshe banata hai jo maujood nahi hotin — aur log un naqshon pe chal kar wahan pahunch jate hain.",
+      "views": 964200,
+      "description": "流れ星が剣になる世界。剣士レンは砕けた自分の星のかけらを取り戻すため、天の川街道を旅する。腰の刀は夜だけ光り、斬れないものはただ一つ——過去の自分。",
+      "voices": [
+        "星よ、我に力を貸せ。",
+        "この一刀に、故郷を懸ける！"
+      ],
       "art": {
-        "a": "#ff8a3d",
-        "b": "#3a1a08",
-        "label": "SC"
+        "a": "#9053ff",
+        "b": "#1a0b2e",
+        "label": "星"
+      },
+      "chapters": [
+        {
+          "num": 8,
+          "title": "流星の刃",
+          "date": "2026-11-08",
+          "pages": 6
+        },
+        {
+          "num": 7,
+          "title": "天の川の渡り守",
+          "date": "2026-11-01",
+          "pages": 6
+        },
+        {
+          "num": 6,
+          "title": "砕けた星の記憶",
+          "date": "2026-10-25",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/hoshikuzu-no-kenshi.jpg"
+    },
+    {
+      "id": "gekkou-no-ryounin",
+      "title": "月光の料理人",
+      "alt": "Gekkou no Ryounin / The Moonlight Chef",
+      "author": "白石あん",
+      "artist": "白石あん",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2023,
+      "genres": [
+        "グルメ",
+        "日常",
+        "ファンタジー"
+      ],
+      "rating": 4.6,
+      "views": 733800,
+      "description": "満月の夜だけ開く屋台「月灯」。料理人ツキヨが出す一皿は、食べた者の忘れたい記憶を優しくほどく。今夜の客は、涙を隠したまま笑う旅芸人。",
+      "voices": [
+        "月が満ちたら、仕込みの時間だ。",
+        "この一碗に、夜を閉じ込めて。"
+      ],
+      "art": {
+        "a": "#f5d76e",
+        "b": "#2e2408",
+        "label": "月"
+      },
+      "chapters": [
+        {
+          "num": 12,
+          "title": "最終皿・月見うどん",
+          "date": "2026-11-07",
+          "pages": 6
+        },
+        {
+          "num": 11,
+          "title": "銀のスプーン",
+          "date": "2026-10-31",
+          "pages": 6
+        },
+        {
+          "num": 10,
+          "title": "夜市の招待状",
+          "date": "2026-10-24",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/gekkou-no-ryounin.jpg"
+    },
+    {
+      "id": "tokyo-madou-gakuen",
+      "title": "東京魔導学園",
+      "alt": "Tokyo Madou Gakuen / Tokyo Magic Academy",
+      "author": "御門レイ",
+      "artist": "Studio Reimon",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2025,
+      "genres": [
+        "学園",
+        "ファンタジー",
+        "アクション"
+      ],
+      "rating": 4.5,
+      "views": 852600,
+      "description": "渋谷の地下に眠る魔方陣の上に建つ学園。転入生ミコトは「魔法劣等生」と笑われるが、彼の左手には学園創立者でも解読できなかった紋章が刻まれていた。",
+      "voices": [
+        "呪文より、根性だ！",
+        "結界、展開——東京魔導学園！"
+      ],
+      "art": {
+        "a": "#ff5470",
+        "b": "#33060f",
+        "label": "魔"
+      },
+      "chapters": [
+        {
+          "num": 6,
+          "title": "紋章の転入生",
+          "date": "2026-11-06",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "夜間訓練",
+          "date": "2026-10-30",
+          "pages": 6
+        },
+        {
+          "num": 4,
+          "title": "寮の幽霊騒ぎ",
+          "date": "2026-10-23",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/tokyo-madou-gakuen.jpg"
+    },
+    {
+      "id": "shinobi-no-shizuku",
+      "title": "忍びの雫",
+      "alt": "Shinobi no Shizuku / The Shinobi's Droplet",
+      "author": "黒木弦太",
+      "artist": "黒木弦太",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2022,
+      "genres": [
+        "アクション",
+        "歴史",
+        "ドラマ"
+      ],
+      "rating": 4.9,
+      "views": 1508900,
+      "description": "雨が降ると強くなる一族・雨隠れの末裔シズク。江戸の闇を抜ける彼女の任務は、将軍家の毒見役となること。雫は音もなく、しかし確かに歴史を変える。",
+      "voices": [
+        "雨音こそ、私の味方。",
+        "任務完了。あとは、生きるだけ。"
+      ],
+      "art": {
+        "a": "#7ce3a8",
+        "b": "#0c2e21",
+        "label": "忍"
       },
       "chapters": [
         {
           "num": 9,
-          "title": "A Map of Elsewhere",
-          "date": "2026-11-06",
-          "pages": 6,
-          "dir": "assets/manga/silent-cartographer/ch-009/"
+          "title": "黒傘の章",
+          "date": "2026-11-05",
+          "pages": 6
         },
         {
           "num": 8,
-          "title": "Ink and Silence",
-          "date": "2026-10-27",
-          "pages": 6,
-          "dir": "assets/manga/silent-cartographer/ch-008/"
+          "title": "石段の血",
+          "date": "2026-10-29",
+          "pages": 6
+        },
+        {
+          "num": 7,
+          "title": "霧の花嫁",
+          "date": "2026-10-22",
+          "pages": 6
         }
-      ]
+      ],
+      "cover": "assets/covers/shinobi-no-shizuku.jpg"
+    },
+    {
+      "id": "karakuri-no-kamigami",
+      "title": "からくりの神々",
+      "alt": "Karakuri no Kamigami / The Clockwork Gods",
+      "author": "鉄堂メカ",
+      "artist": "鉄堂メカ",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2024,
+      "genres": [
+        "SF",
+        "ミステリー",
+        "ドラマ"
+      ],
+      "rating": 4.6,
+      "views": 611400,
+      "description": "明治四十一年、東京。歯車でできた「神様」が祀られる神社で、修理職人の少年ゼンマイは神の心臓から人間の手紙を見つける。誰が神を作り、誰が祈らせたのか。",
+      "voices": [
+        "神様も、ネジが緩むさ。",
+        "ゼンマイを巻け、朝が来る。"
+      ],
+      "art": {
+        "a": "#ffb347",
+        "b": "#4a2b06",
+        "label": "機"
+      },
+      "chapters": [
+        {
+          "num": 7,
+          "title": "神社の心臓",
+          "date": "2026-11-04",
+          "pages": 6
+        },
+        {
+          "num": 6,
+          "title": "錆びた祈り",
+          "date": "2026-10-28",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "蒸動の都",
+          "date": "2026-10-21",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/karakuri-no-kamigami.jpg"
+    },
+    {
+      "id": "yakyu-shonen-haru",
+      "title": "野球少年ハル",
+      "alt": "Yakyu Shonen Haru / Baseball Boy Haru",
+      "author": "青葉球太",
+      "artist": "青葉球太",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2023,
+      "genres": [
+        "スポーツ",
+        "ドラマ",
+        "日常"
+      ],
+      "rating": 4.7,
+      "views": 928700,
+      "description": "ボール球しか投げられない少年ハルと、捕手がいない廃部寸前の野球部。二人の夏は、河川敷のグラウンドから始まった。目指すはただ一勝、されど一勝。",
+      "voices": [
+        "一球、入魂！",
+        "俺たちの夏は、まだ終わらない！"
+      ],
+      "art": {
+        "a": "#4aa3ff",
+        "b": "#0a1e3a",
+        "label": "球"
+      },
+      "chapters": [
+        {
+          "num": 10,
+          "title": "延長十回の約束",
+          "date": "2026-11-03",
+          "pages": 6
+        },
+        {
+          "num": 9,
+          "title": "河川敷の決勝",
+          "date": "2026-10-27",
+          "pages": 6
+        },
+        {
+          "num": 8,
+          "title": "キャプテンの涙",
+          "date": "2026-10-20",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/yakyu-shonen-haru.jpg"
+    },
+    {
+      "id": "shinkai-yubinkyoku",
+      "title": "深海郵便局",
+      "alt": "Shinkai Yubinkyoku / The Deep-Sea Post Office",
+      "author": "泡坂ナミ",
+      "artist": "泡坂ナミ",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2025,
+      "genres": [
+        "ファンタジー",
+        "日常",
+        "ミステリー"
+      ],
+      "rating": 4.4,
+      "views": 402300,
+      "description": "水深三千メートル、光の届かない郵便局。配達員フカミは沈没船の荷物の宛て人を探す。手紙は錆びても、想いは錆びない——静かな深海ファンタジー。",
+      "voices": [
+        "配達完了、六千メートルの恋。",
+        "消印のない手紙ほど、重い。"
+      ],
+      "art": {
+        "a": "#12d4e7",
+        "b": "#04141f",
+        "label": "深"
+      },
+      "chapters": [
+        {
+          "num": 4,
+          "title": "沈没船の住所",
+          "date": "2026-11-02",
+          "pages": 6
+        },
+        {
+          "num": 3,
+          "title": "潮騒の消印",
+          "date": "2026-10-26",
+          "pages": 6
+        },
+        {
+          "num": 2,
+          "title": "夜光貝の切手",
+          "date": "2026-10-19",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/shinkai-yubinkyoku.jpg"
+    },
+    {
+      "id": "higanbana-no-niwa",
+      "title": "彼岸花の庭",
+      "alt": "Higanbana no Niwa / The Spider-Lily Garden",
+      "author": "朱里あかね",
+      "artist": "朱里あかね",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2024,
+      "genres": [
+        "ミステリー",
+        "ドラマ",
+        "怪異"
+      ],
+      "rating": 4.5,
+      "views": 519800,
+      "description": "祖母が残した庭には、季節外れの彼岸花が咲く。夜ごと花の下から聞こえる手毬歌。孫のアカネは庭を掘り返すことを決意する——そこには村の禁忌が眠っていた。",
+      "voices": [
+        "手毬歌が、やまない。",
+        "この庭は、記憶の墓標。"
+      ],
+      "art": {
+        "a": "#ff3d5a",
+        "b": "#2b0410",
+        "label": "彼"
+      },
+      "chapters": [
+        {
+          "num": 6,
+          "title": "手毬歌の夜",
+          "date": "2026-11-01",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "赤い花の水やり",
+          "date": "2026-10-25",
+          "pages": 6
+        },
+        {
+          "num": 4,
+          "title": "祖母の日記",
+          "date": "2026-10-18",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/higanbana-no-niwa.jpg"
+    },
+    {
+      "id": "ramen-taisho",
+      "title": "ラーメン大将",
+      "alt": "Ramen Taisho / Ramen General",
+      "author": "麺堂コシ",
+      "artist": "麺堂コシ",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2022,
+      "genres": [
+        "グルメ",
+        "コメディ",
+        "熱血"
+      ],
+      "rating": 4.8,
+      "views": 1176500,
+      "description": "行列の絶えないラーメン店「大将」の店主は、元・伝説の喧嘩屋。スープの温度に魂を込める男の前に、冷凍麺帝国の刺客が現れる。丼バトル、丼ドン！",
+      "voices": [
+        "スープは裏切らない。",
+        "一杯に、全力だ！"
+      ],
+      "art": {
+        "a": "#ff8a3d",
+        "b": "#3a1a08",
+        "label": "麺"
+      },
+      "chapters": [
+        {
+          "num": 15,
+          "title": "冷凍麺の刺客",
+          "date": "2026-10-31",
+          "pages": 6
+        },
+        {
+          "num": 14,
+          "title": "醤油の意地",
+          "date": "2026-10-24",
+          "pages": 6
+        },
+        {
+          "num": 13,
+          "title": "朝ラーの掟",
+          "date": "2026-10-17",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/ramen-taisho.jpg"
+    },
+    {
+      "id": "uchu-ryoshi-gen",
+      "title": "宇宙漁師ゲン",
+      "alt": "Uchu Ryoshi Gen / Space Fisherman Gen",
+      "author": "星野釣丸",
+      "artist": "星野釣丸",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2026,
+      "genres": [
+        "SF",
+        "冒険",
+        "コメディ"
+      ],
+      "rating": 4.3,
+      "views": 288400,
+      "description": "銀河の縁で宇宙クジラを釣る漁師ゲン。ある日釣り上げたのは、星を呑むと言われる「虚空マグロ」。船はオンボロ、乗組員は猫一匹——それでも海(宇宙)は広い。",
+      "voices": [
+        "大物だ…星が揺れてるぜ！",
+        "宇宙は俺らの漁場だ！"
+      ],
+      "art": {
+        "a": "#8f6bff",
+        "b": "#101c3a",
+        "label": "宇"
+      },
+      "chapters": [
+        {
+          "num": 5,
+          "title": "虚空マグロ漁",
+          "date": "2026-10-30",
+          "pages": 6
+        },
+        {
+          "num": 4,
+          "title": "猫船長の判断",
+          "date": "2026-10-23",
+          "pages": 6
+        },
+        {
+          "num": 3,
+          "title": "流星網",
+          "date": "2026-10-16",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/uchu-ryoshi-gen.jpg"
+    },
+    {
+      "id": "mahoutsukai-no-neko-cafe",
+      "title": "魔法使いの猫カフェ",
+      "alt": "Mahoutsukai no Neko Cafe / The Witch's Cat Cafe",
+      "author": "抹茶もち",
+      "artist": "抹茶もち",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2025,
+      "genres": [
+        "日常",
+        "コメディ",
+        "ファンタジー"
+      ],
+      "rating": 4.6,
+      "views": 645900,
+      "description": "魔法使い見習いのミントが開いた猫カフェ。だが客の猫たちは全員、魔法をかけられた元・人間。解呪の条件は「心から美味しい」と言わせるラテアート。",
+      "voices": [
+        "にゃんとかなるさ！",
+        "魔法より、笑顔の一杯。"
+      ],
+      "art": {
+        "a": "#f7a8c4",
+        "b": "#3a1226",
+        "label": "猫"
+      },
+      "chapters": [
+        {
+          "num": 7,
+          "title": "ツンデレ猫の解呪",
+          "date": "2026-10-29",
+          "pages": 6
+        },
+        {
+          "num": 6,
+          "title": "雨の日の常連",
+          "date": "2026-10-22",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "開店記念日の大失敗",
+          "date": "2026-10-15",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/mahoutsukai-no-neko-cafe.jpg"
+    },
+    {
+      "id": "kensei-no-deshi",
+      "title": "剣聖の弟子",
+      "alt": "Kensei no Deshi / Disciple of the Sword Saint",
+      "author": "一刀斎",
+      "artist": "一刀斎",
+      "status": "完結",
+      "type": "Manga",
+      "year": 2021,
+      "genres": [
+        "アクション",
+        "歴史",
+        "侍"
+      ],
+      "rating": 4.9,
+      "views": 1892300,
+      "description": "剣聖と呼ばれた老剣士の最後の弟子となった孤児ノボル。師の教えはただ一つ——「抜くな」。最強の剣は鞘の中で眠る時、最も鋭い。",
+      "voices": [
+        "抜くな、と師は言った。",
+        "それでも、守りたいものがある。"
+      ],
+      "art": {
+        "a": "#c9d1d9",
+        "b": "#161b22",
+        "label": "剣"
+      },
+      "chapters": [
+        {
+          "num": 11,
+          "title": "鞘の中の雷",
+          "date": "2026-10-28",
+          "pages": 6
+        },
+        {
+          "num": 10,
+          "title": "峠の決闘",
+          "date": "2026-10-21",
+          "pages": 6
+        },
+        {
+          "num": 9,
+          "title": "入門の日",
+          "date": "2026-10-14",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/kensei-no-deshi.jpg"
+    },
+    {
+      "id": "ame-no-hi-no-yusha",
+      "title": "雨の日の勇者",
+      "alt": "Ame no Hi no Yusha / The Rainy-Day Hero",
+      "author": "小雨さわ",
+      "artist": "小雨さわ",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2024,
+      "genres": [
+        "ファンタジー",
+        "ドラマ",
+        "日常"
+      ],
+      "rating": 4.4,
+      "views": 377100,
+      "description": "勇者は雨の日だけ現れる。傘を差し出すだけ、荷物を持つだけ——それだけの「冒険」を人々に与えて消える。今日は、勇者自身が傘を必要とする日。",
+      "voices": [
+        "勇者は、雨の数だけいる。",
+        "今日は、私の番。"
+      ],
+      "art": {
+        "a": "#6bb7ff",
+        "b": "#0d2033",
+        "label": "雨"
+      },
+      "chapters": [
+        {
+          "num": 8,
+          "title": "勇者の傘",
+          "date": "2026-10-27",
+          "pages": 6
+        },
+        {
+          "num": 7,
+          "title": "虹のあと",
+          "date": "2026-10-20",
+          "pages": 6
+        },
+        {
+          "num": 6,
+          "title": "置き忘れの手紙",
+          "date": "2026-10-13",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/ame-no-hi-no-yusha.jpg"
+    },
+    {
+      "id": "hyakki-yako-records",
+      "title": "百鬼夜行レコード",
+      "alt": "Hyakki Yako Records / Night-Parade Records",
+      "author": "灯台モズ",
+      "artist": "灯台モズ",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2025,
+      "genres": [
+        "音楽",
+        "怪異",
+        "コメディ"
+      ],
+      "rating": 4.5,
+      "views": 468200,
+      "description": "深夜零時、廃れたレコード店から百鬼夜行が始まる。店員ユズは妖怪たちの「忘れ歌」を録音するアルバイト。一曲録り終えるたび、彼女は少しだけ妖怪に近づく。",
+      "voices": [
+        "零時の針が、落ちる時。",
+        "ようこそ、百鬼夜行レコードへ。"
+      ],
+      "art": {
+        "a": "#b085ff",
+        "b": "#1d1030",
+        "label": "鬼"
+      },
+      "chapters": [
+        {
+          "num": 6,
+          "title": "傘おんばのバラード",
+          "date": "2026-10-26",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "塗り壁のベースライン",
+          "date": "2026-10-19",
+          "pages": 6
+        },
+        {
+          "num": 4,
+          "title": "収録・ろくろ首",
+          "date": "2026-10-12",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/hyakki-yako-records.jpg"
+    },
+    {
+      "id": "banjo-no-stella",
+      "title": "盤上のステラ",
+      "alt": "Banjo no Stella / Stella on the Board",
+      "author": "駒田まり",
+      "artist": "駒田まり",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2026,
+      "genres": [
+        "頭脳",
+        "ドラマ",
+        "学園"
+      ],
+      "rating": 4.6,
+      "views": 356800,
+      "description": "将棋盤の向こう側に、星が見える少女ステラ。女流棋士を目指す彼女の前に、AI将棋「オリオン」を操る謎の少年が現れる。直感対演算、盤上の宇宙。",
+      "voices": [
+        "この一手に、星を懸ける。",
+        "盤上は、私の宇宙。"
+      ],
+      "art": {
+        "a": "#ffd76b",
+        "b": "#332606",
+        "label": "盤"
+      },
+      "chapters": [
+        {
+          "num": 9,
+          "title": "対AI・初手",
+          "date": "2026-10-25",
+          "pages": 6
+        },
+        {
+          "num": 8,
+          "title": "詰まない夢",
+          "date": "2026-10-18",
+          "pages": 6
+        },
+        {
+          "num": 7,
+          "title": "支部の挑戦状",
+          "date": "2026-10-11",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/banjo-no-stella.jpg"
+    },
+    {
+      "id": "ryu-saku-oka-no-bokujou",
+      "title": "竜咲く丘の牧場",
+      "alt": "Ryu Saku Oka no Bokujou / The Dragon-Bloom Hill Farm",
+      "author": "牧野はな",
+      "artist": "牧野はな",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2023,
+      "genres": [
+        "ファンタジー",
+        "日常",
+        "コメディ"
+      ],
+      "rating": 4.7,
+      "views": 589600,
+      "description": "竜が花のように咲く丘で、牧場を営む兄妹。今春ふ化した子竜たちは、牛より人懐っこく、羊よりよく食べる。のどかファンタジー牧場物語。",
+      "voices": [
+        "こらっ、羊を食べない！",
+        "ようこそ、竜咲く丘へ。"
+      ],
+      "art": {
+        "a": "#7ce3a8",
+        "b": "#12301f",
+        "label": "竜"
+      },
+      "chapters": [
+        {
+          "num": 6,
+          "title": "子竜の予防接種",
+          "date": "2026-10-24",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "草刈りと空歩き",
+          "date": "2026-10-17",
+          "pages": 6
+        },
+        {
+          "num": 4,
+          "title": "ふ化の朝",
+          "date": "2026-10-10",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/ryu-saku-oka-no-bokujou.jpg"
+    },
+    {
+      "id": "dennou-samurai-kagura",
+      "title": "電脳侍 KAGURA",
+      "alt": "Denno Samurai Kagura / Cyber Samurai Kagura",
+      "author": "銀線カイ",
+      "artist": "銀線カイ",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2026,
+      "genres": [
+        "SF",
+        "アクション",
+        "サイバー"
+      ],
+      "rating": 4.8,
+      "views": 1043700,
+      "description": "電脳江戸2077。記憶を刀に変換できる侍カグラは、自分の過去を売ってしまった。取り戻す方法はただ一つ——データ天守閣の最上層にいる「将軍AI」を斬る。",
+      "voices": [
+        "接続、完了。斬る。",
+        "私の記憶は、私自身が取り戻す。"
+      ],
+      "art": {
+        "a": "#12d4e7",
+        "b": "#101c3a",
+        "label": "電"
+      },
+      "chapters": [
+        {
+          "num": 7,
+          "title": "データ天守閣",
+          "date": "2026-10-23",
+          "pages": 6
+        },
+        {
+          "num": 6,
+          "title": "幽霊パケット",
+          "date": "2026-10-16",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "ネオンの江戸",
+          "date": "2026-10-09",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/dennou-samurai-kagura.jpg"
+    },
+    {
+      "id": "shirayuki-shobodan",
+      "title": "白雪消防団",
+      "alt": "Shirayuki Shobodan / The Snow-White Fire Brigade",
+      "author": "炎雪まもる",
+      "artist": "炎雪まもる",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2022,
+      "genres": [
+        "ドラマ",
+        "アクション",
+        "日常"
+      ],
+      "rating": 4.5,
+      "views": 441900,
+      "description": "豪雪地帯の小さな消防団。団員はパン屋、教師、そして高校生。吹雪の夜、彼らは赤い消防車一台で町を守る。雪は火を隠す——だから、彼らは勘と絆で燃える家を見つける。",
+      "voices": [
+        "出動！雪に負けるな！",
+        "町を守るのに、理由はいらない。"
+      ],
+      "art": {
+        "a": "#ff5470",
+        "b": "#20242c",
+        "label": "雪"
+      },
+      "chapters": [
+        {
+          "num": 8,
+          "title": "吹雪の夜のサイレン",
+          "date": "2026-10-22",
+          "pages": 6
+        },
+        {
+          "num": 7,
+          "title": "氷の貯水池",
+          "date": "2026-10-15",
+          "pages": 6
+        },
+        {
+          "num": 6,
+          "title": "団服の重み",
+          "date": "2026-10-08",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/shirayuki-shobodan.jpg"
+    },
+    {
+      "id": "toge-no-drift-o",
+      "title": "峠のドリフト王",
+      "alt": "Toge no Drift O / The Touge Drift King",
+      "author": "峠走タケル",
+      "artist": "峠走タケル",
+      "status": "連載中",
+      "type": "Manga",
+      "year": 2024,
+      "genres": [
+        "スポーツ",
+        "アクション",
+        "車"
+      ],
+      "rating": 4.6,
+      "views": 725400,
+      "description": "免許取りたての女子大生ミサキが挑むのは、夜霧の峠ドリフトバトル。父が残したハチロクは錆びていたが、ハンドルを握る彼女の目は錆びていない。",
+      "voices": [
+        "霧は、味方だ。",
+        "コーナーの先に、父がいる。"
+      ],
+      "art": {
+        "a": "#ffb347",
+        "b": "#231303",
+        "label": "峠"
+      },
+      "chapters": [
+        {
+          "num": 6,
+          "title": "夜霧のヘアピン",
+          "date": "2026-10-21",
+          "pages": 6
+        },
+        {
+          "num": 5,
+          "title": "ハチロク再起動",
+          "date": "2026-10-14",
+          "pages": 6
+        },
+        {
+          "num": 4,
+          "title": "免許と決心",
+          "date": "2026-10-07",
+          "pages": 6
+        }
+      ],
+      "cover": "assets/covers/toge-no-drift-o.jpg"
     }
   ]
 }

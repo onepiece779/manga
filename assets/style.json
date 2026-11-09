@@ -1,0 +1,11 @@
+{
+  "accent": "#9053ff",
+  "accent2": "#12d4e7",
+  "bg": "#0b0d12",
+  "surface": "#12151d",
+  "surface2": "#1a1f2b",
+  "border": "#262c3a",
+  "radius": "14px",
+  "container": "1240px",
+  "font": "system-ui,-apple-system,\"Segoe UI\",Roboto,Arial,sans-serif"
+}
