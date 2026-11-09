@@ -64,11 +64,22 @@
       '<text x="545" y="' + (l2 ? 245 : 265) + '" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#111">' + esc(l1) + '</text>' +
       (l2 ? '<text x="545" y="288" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#111">' + esc(l2) + '</text>' : "") +
       "</g>";
+    var sents = (t.description || "").split(/。/).filter(function (s) { return s.trim(); });
+    var nar = (sents[(i - 1) % Math.max(sents.length, 1)] || "").trim();
+    var caption = "";
+    if (nar) {
+      var lines = [];
+      for (var k = 0; k < nar.length && lines.length < 3; k += 30) lines.push(nar.slice(k, k + 30));
+      caption = '<g><rect x="40" y="1000" width="720" height="' + (lines.length * 34 + 30) + '" fill="#fff" stroke="#111" stroke-width="3"/>' +
+        lines.map(function (ln, xi) {
+          return '<text x="60" y="' + (1035 + xi * 34) + '" font-family="system-ui,sans-serif" font-size="24" fill="#111">' + esc(ln) + "</text>";
+        }).join("") + "</g>";
+    }
     return '<svg class="mkm-page" viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + esc(t.title) + ' page ' + i + '">' +
       '<rect width="800" height="1200" fill="#fdfdf8"/>' +
       '<text x="40" y="58" font-family="system-ui,sans-serif" font-size="30" font-weight="800" fill="#111">' + esc(t.title) + " — 第" + esc(c.num) + "話 " + esc(c.title) + "</text>" +
-      panels + bubble +
-      '<text x="760" y="1170" text-anchor="end" font-family="system-ui,sans-serif" font-size="22" fill="#666">' + i + " / " + total + "</text>" +
+      panels + bubble + caption +
+      '<text x="760" y="1185" text-anchor="end" font-family="system-ui,sans-serif" font-size="22" fill="#666">' + i + " / " + total + "</text>" +
       "</svg>";
   }
   function imgTag(p, lazy) {
@@ -236,6 +247,7 @@
       (lc ? '<span class="mkm-card-chapter">Ch. ' + esc(lc.num) + "</span>" : "") + "</div></a>" +
       '<div class="mkm-card-body"><h3 class="mkm-card-title"><a href="manga.html?id=' + esc(t.id) + '">' + esc(t.title) + "</a></h3>" +
       '<div class="mkm-card-genres">' + g.map(function (x) { return '<a class="mkm-genre" href="search.html?s=' + encodeURIComponent(x) + '">' + esc(x) + "</a>"; }).join("") + "</div>" +
+      '<p class="mkm-card-excerpt">' + esc((t.description || "").slice(0, 96)) + '…</p>' +
       '<div class="mkm-card-meta"><span>' + esc(t.status || "Ongoing") + '</span><a class="mkm-card-link" href="read.html?id=' + esc(t.id) + "&ch=" + (lc ? lc.num : 1) + '">Read →</a></div></div></article>';
   }
   /* related posts: shared genre */
@@ -255,7 +267,7 @@
     if (slider) {
       slider.innerHTML = S.slides.map(function (s, i) {
         var t = find(s.titleId) || S.titles[0];
-        return '<section class="mkm-hero mkm-hero-slide' + (i ? "" : "") + '" style="--mkm-hero-bg:url(&quot;' + bg(t) + '&quot;)">' +
+        return '<section class="mkm-hero mkm-hero-slide' + (cover(t) ? " has-cover" : "") + '" style="--mkm-hero-bg:url(&quot;' + bg(t) + '&quot;)">' +
           '<div class="mkm-container mkm-hero-inner">' +
           '<div class="mkm-hero-cover"><img src="' + cover(t) + '" onerror="this.onerror=null;this.src=\'' + coverSvg(t) + '\'" alt="' + esc(t.title) + ' cover"' + (i ? ' loading="lazy"' : "") + '></div>' +
           '<div class="mkm-hero-content">' +
@@ -291,9 +303,12 @@
 
     var grid = $("#latest-grid");
     if (grid) {
-      grid.innerHTML = allChapters().map(function (x) { return x.t; })
-        .filter(function (t, i, arr) { return arr.indexOf(t) === i; })
-        .slice(0, 8).map(card).join("");
+      var ordered = allChapters().map(function (x) { return x.t; })
+        .filter(function (t, i, arr) { return arr.indexOf(t) === i; });
+      S.titles.forEach(function (t) { if (ordered.indexOf(t) === -1) ordered.push(t); });
+      grid.innerHTML = ordered.map(card).join("");
+      var head = $(".mkm-listing-section .mkm-subtitle");
+      if (head) head.textContent = "All " + ordered.length + " original series — sab posts, taza update ke saath.";
     }
 
     var hr = $("#home-reader");
@@ -491,7 +506,8 @@
   /* ---------- boot ---------- */
   Promise.all([loadContent(), loadAds(), loadStyle()]).then(function () {
     var css = document.createElement("style");
-    css.textContent = ".mkm-reader-images>svg.mkm-page{width:100%;height:auto;margin:0 auto 10px;border-radius:6px;background:#fdfdf8;display:block}" +
+    css.textContent = ".mkm-card-excerpt{color:var(--mkm-muted);font-size:.78rem;line-height:1.45;margin:7px 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}" +
+      ".mkm-reader-images>svg.mkm-page{width:100%;height:auto;margin:0 auto 10px;border-radius:6px;background:#fdfdf8;display:block}" +
       ".mkm-reader-images.is-paged>svg.mkm-page{width:auto;max-width:100%;max-height:80vh}" +
       ".mkm-home-reader .mkm-reader-images>svg.mkm-page{margin:0 auto;border-radius:0}" +
       ".mkm-home-reader .mkm-reader-images>svg.mkm-page:first-child{border-radius:8px 8px 0 0}";
