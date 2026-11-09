@@ -1,9 +1,1 @@
-# ads.txt — IAB standard. Apni ad network ki line yahan rakhein.
-# Neeche wali EXAMPLE line ko apni asli pub-id se replace karein,
-# warna delete kar dein. Format: domain, publisher-id, relationship, cert-id
-#
-# Google AdSense example:
-google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
-#
-# Agar koi aur network hai (Ezoic/Monetag etc.) unki di hui line add karein.
-# Ye file site ke root me hai, isliye https://aapki-domain/ads.txt pe serve hogi.
+google.com, pub-9937845186486833, DIRECT, f08c47fec0942fa0
