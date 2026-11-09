@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MKM Static — read manga online</title>
+<meta name="description" content="A fast, free manga reading site built on the MKM Manga Pro design.">
+<link rel="stylesheet" href="assets/css/mkm.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%239053ff'/><text x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff' font-family='system-ui' font-weight='800'>M</text></svg>">
+</head>
+<body data-page="home" id="mkm-top">
+<a class="mkm-skip-link" href="#content">Skip to content</a>
+
+<header class="mkm-header is-sticky">
+  <div class="mkm-container mkm-header-inner">
+    <div class="mkm-brand">
+      <a class="mkm-logo" href="index.html" aria-label="Home">
+        <span class="mkm-logo-mark">M</span>
+        <span class="mkm-logo-text">MKM Static</span>
+      </a>
+    </div>
+    <nav class="mkm-nav" aria-label="Primary menu">
+      <ul class="mkm-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="search.html">Browse</a></li>
+        <li><a href="index.html#latest">Latest</a></li>
+        <li><a href="index.html#feature">About</a></li>
+      </ul>
+    </nav>
+    <div class="mkm-header-actions">
+      <form class="mkm-search" role="search" action="search.html" method="get">
+        <input type="search" name="s" placeholder="Search manga…" aria-label="Search manga">
+        <button type="submit" aria-label="Search">⌕</button>
+      </form>
+      <button type="button" class="mkm-menu-toggle" aria-expanded="false" aria-controls="mkm-mobile-menu">
+        <span class="mkm-menu-toggle-icon" aria-hidden="true"></span><span class="mkm-menu-toggle-label">Menu</span>
+      </button>
+    </div>
+  </div>
+  <div class="mkm-mobile-menu" id="mkm-mobile-menu"><div class="mkm-container">
+    <ul class="mkm-mobile-nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="search.html">Browse</a></li>
+      <li><a href="index.html#latest">Latest</a></li>
+      <li><a href="index.html#feature">About</a></li>
+    </ul>
+    <form class="mkm-search" role="search" action="search.html" method="get">
+      <input type="search" name="s" placeholder="Search manga…" aria-label="Search manga">
+      <button type="submit" aria-label="Search">⌕</button>
+    </form>
+  </div></div>
+</header>
+<div data-ad="header"></div>
+
+<main id="content" class="mkm-main">
+  <div class="mkm-hero-slider" id="hero-slider" aria-label="Featured highlights"></div>
+  <div data-ad="home"></div>
+
+  <div id="feature"></div>
+
+  <div class="mkm-container">
+    <div class="mkm-layout mkm-latest-full">
+      <div>
+        <div class="mkm-section mkm-listing-section" id="latest">
+          <div class="mkm-section-head">
+            <div><h2 class="mkm-title">Latest Manga</h2><p class="mkm-subtitle">Fresh releases, updated daily.</p></div>
+            <a class="mkm-btn mkm-btn-sm mkm-btn-ghost" href="search.html">View All</a>
+          </div>
+          <div class="mkm-grid" id="latest-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="home-reader"></div>
+</main>
+<div data-ad="footer"></div>
+
+<footer class="mkm-footer">
+  <div class="mkm-container">
+    <div class="mkm-footer-grid has-single-menu">
+      <div class="mkm-footer-brand">
+        <a class="mkm-footer-logo" href="index.html"><span class="mkm-logo-mark">M</span><span class="mkm-logo-text">MKM Static</span></a>
+        <p class="mkm-footer-about"></p>
+        <div class="mkm-social"></div>
+      </div>
+      <div class="mkm-footer-col"><h3>Quick Links</h3>
+        <ul class="mkm-footer-menu">
+          <li><a href="search.html">Browse manga</a></li>
+          <li><a href="index.html#latest">Latest updates</a></li>
+          <li><a href="index.html#feature">About</a></li>
+        </ul>
+      </div>
+      <div class="mkm-footer-col"><h3>Stay Updated</h3>
+        <p>New chapter alerts and community updates.</p>
+        <a class="mkm-btn mkm-btn-sm" href="#latest">Start Reading</a>
+      </div>
+    </div>
+    <div class="mkm-footer-bottom">
+      <p>© <span data-year></span> MKM Static. Sirf original / licensed / public-domain content.</p>
+      <p>Theme: <a href="https://mkm.fan/">MKM Manga Pro</a> (GPLv2) — static port</p>
+    </div>
+  </div>
+</footer>
+<button type="button" class="mkm-back-to-top" aria-label="Back to top">↑</button>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/mkm-theme-main.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reader — MKM Static</title>
+<link rel="stylesheet" href="assets/css/mkm.css">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="read" class="mkm-reading" id="mkm-top">
+<a class="mkm-skip-link" href="#content">Skip to content</a>
+
+<header class="mkm-header is-sticky">
+  <div class="mkm-container mkm-header-inner">
+    <div class="mkm-brand">
+      <a class="mkm-logo" href="index.html" aria-label="Home"><span class="mkm-logo-mark">M</span><span class="mkm-logo-text">MKM Static</span></a>
+    </div>
+    <div class="mkm-header-actions">
+      <a class="mkm-btn mkm-btn-sm mkm-btn-ghost" href="index.html">Catalog</a>
+      <button type="button" class="mkm-menu-toggle" aria-expanded="false" aria-controls="mkm-mobile-menu">
+        <span class="mkm-menu-toggle-icon" aria-hidden="true"></span><span class="mkm-menu-toggle-label">Menu</span>
+      </button>
+    </div>
+  </div>
+  <div class="mkm-mobile-menu" id="mkm-mobile-menu"><div class="mkm-container">
+    <ul class="mkm-mobile-nav"><li><a href="index.html">Home</a></li><li><a href="search.html">Browse</a></li></ul>
+  </div></div>
+</header>
+<div class="mkm-progress"><div class="mkm-progress-bar" id="prog-bar"></div></div>
+<div data-ad="header"></div>
+
+<main id="content" class="mkm-main" >
+  <div class="mkm-container mkm-page" id="reader-stage">
+    <div class="mkm-reader-head">
+      <h1 id="r-title">Loading…</h1>
+      <div class="mkm-reader-tools">
+        <select id="ch-select" aria-label="Chapter"></select>
+        <button type="button" id="mode-btn" class="mkm-btn mkm-btn-sm mkm-btn-ghost">Switch: paged</button>
+        <button type="button" id="width-btn" class="mkm-btn mkm-btn-sm mkm-btn-ghost">Width: normal</button>
+      </div>
+    </div>
+
+    <div id="reader-wrap" class="mkm-reader">
+      <div class="mkm-reader-images" id="reader-images"></div>
+      <div class="mkm-reader-nav">
+        <button type="button" id="pg-prev" class="mkm-btn mkm-btn-ghost" hidden>← Page</button>
+        <span class="mkm-subtitle" id="p-count" style="align-self:center"></span>
+        <button type="button" id="pg-next" class="mkm-btn mkm-btn-ghost" hidden>Page →</button>
+      </div>
+    </div>
+
+    <div class="mkm-reader-nav">
+      <button type="button" id="ch-prev" class="mkm-btn mkm-btn-ghost">← Previous chapter</button>
+      <a class="mkm-btn mkm-btn-sm" id="all-ch" href="index.html">All chapters</a>
+      <button type="button" id="ch-next" class="mkm-btn mkm-btn-ghost">Next chapter →</button>
+    </div>
+  </div>
+</main>
+<div data-ad="footer"></div>
+
+<footer class="mkm-footer">
+  <div class="mkm-container">
+    <div class="mkm-footer-bottom">
+      <p>© <span data-year></span> MKM Static.</p>
+      <p>Theme: <a href="https://mkm.fan/">MKM Manga Pro</a> (GPLv2) — static port</p>
+    </div>
+  </div>
+</footer>
+<button type="button" class="mkm-back-to-top" aria-label="Back to top">↑</button>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/mkm-theme-main.js"></script>
+</body>
+</html>
