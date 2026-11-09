@@ -121,6 +121,7 @@ details.t .in{padding:14px}
           <div class="row"><label>Border</label><input id="y-border" type="color"></div>
           <div class="row"><label>Radius</label><input id="y-radius" placeholder="14px"></div>
           <div class="row"><label>Max width</label><input id="y-container" placeholder="1240px"></div>
+          <div class="row"><label>Grid card min (px)</label><input id="y-gridmin" type="number" value="180"></div>
         </div>
       </div>
     </main>
@@ -215,6 +216,7 @@ function render(){
   $("#y-bg").value = sy.bg || "#0b0d12"; $("#y-surface").value = sy.surface || "#12151d";
   $("#y-surface2").value = sy.surface2 || "#1a1f2b"; $("#y-border").value = sy.border || "#262c3a";
   $("#y-radius").value = sy.radius || "14px"; $("#y-container").value = sy.container || "1240px";
+  $("#y-gridmin").value = sy.gridMin || 180;
   renderTitles(); renderAds();
 }
 function renderTitles(){
@@ -354,6 +356,7 @@ $("#save").onclick = function(){
   c.name = $("#s-name").value; c.tagline = $("#s-tagline").value; c.about = $("#s-about").value;
   st.style = { accent: $("#y-accent").value, accent2: $("#y-accent2").value, bg: $("#y-bg").value, surface: $("#y-surface").value,
     surface2: $("#y-surface2").value, border: $("#y-border").value, radius: $("#y-radius").value, container: $("#y-container").value,
+    gridMin: Number($("#y-gridmin").value) || 180,
     font: (st.style && st.style.font) || "system-ui,-apple-system,\"Segoe UI\",Roboto,Arial,sans-serif" };
   status("Publishing…");
   put(PATHS.content, b64e(JSON.stringify(c, null, 2) + "\n"), st.sha.content).then(function(r){ st.sha.content = r.content.sha;

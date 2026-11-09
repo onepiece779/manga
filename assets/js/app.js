@@ -28,7 +28,7 @@
       '<text x="200" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#fff" fill-opacity=".7">' + esc(t.title) + '</text></svg>');
   }
   function cover(t) { return t.cover || coverSvg(t); }
-  function page(t, num, i, total) {
+  function pagePh(t, num, i, total) {
     var a = (t.art && t.art.a) || "#9053ff";
     return uri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200">' +
       '<rect width="800" height="1200" fill="#f2efe7"/>' +
@@ -43,20 +43,53 @@
       '<text x="560" y="216" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" fill="#777">' + esc(t.title) + '</text></g>' +
       '<text x="400" y="688" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" fill="#888">asli image: assets/manga/' + esc(t.id) + '/ch-' + pad(num) + '/' + pad(i) + '.jpg</text></svg>');
   }
+  /* asli pages aane tak: cover art se B&W manga page (inline SVG panels + bubble) */
+  function pageInline(t, c, i, total) {
+    var cv = cover(t);
+    var crops = [[0,0,600,450],[0,450,600,450],[0,150,600,600],[150,0,450,675],[0,0,450,675],[150,225,450,675]];
+    var lay = (i % 2) ? [[40,90,720,430],[40,540,350,330],[410,540,350,330],[40,890,720,250]]
+                      : [[40,90,350,500],[410,90,350,500],[40,610,720,300],[40,930,720,210]];
+    var panels = lay.map(function (r, k) {
+      var cr = crops[(i + k) % crops.length];
+      var filt = (i === 1 && k === 0) ? "" : ' style="filter:grayscale(1) contrast(1.08)"';
+      return '<svg x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '" viewBox="' + cr.join(" ") + '" preserveAspectRatio="xMidYMid slice">' +
+        '<image href="' + cv + '" width="600" height="900"' + filt + '/></svg>' +
+        '<rect x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '" fill="none" stroke="#111" stroke-width="4"/>';
+    }).join("");
+    var v = (t.voices && t.voices[(i - 1) % t.voices.length]) || "";
+    var half = Math.ceil(v.length / 2);
+    var l1 = v.slice(0, half), l2 = v.slice(half);
+    var bubble = '<g><ellipse cx="545" cy="255" rx="195" ry="95" fill="#fff" stroke="#111" stroke-width="4"/>' +
+      '<path d="M505 335 L485 390 L548 340 Z" fill="#fff" stroke="#111" stroke-width="4"/>' +
+      '<text x="545" y="' + (l2 ? 245 : 265) + '" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#111">' + esc(l1) + '</text>' +
+      (l2 ? '<text x="545" y="288" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#111">' + esc(l2) + '</text>' : "") +
+      "</g>";
+    return '<svg class="mkm-page" viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + esc(t.title) + ' page ' + i + '">' +
+      '<rect width="800" height="1200" fill="#fdfdf8"/>' +
+      '<text x="40" y="58" font-family="system-ui,sans-serif" font-size="30" font-weight="800" fill="#111">' + esc(t.title) + " — 第" + esc(c.num) + "話 " + esc(c.title) + "</text>" +
+      panels + bubble +
+      '<text x="760" y="1170" text-anchor="end" font-family="system-ui,sans-serif" font-size="22" fill="#666">' + i + " / " + total + "</text>" +
+      "</svg>";
+  }
+  function imgTag(p, lazy) {
+    if (p.inline) return p.inline;
+    return '<img src="' + p.real + '" alt="Page ' + p.i + '" ' + (lazy ? 'loading="lazy" ' : "") +
+      'onerror="this.onerror=null;this.src=\'' + p.ph + '\'">';
+  }
   function pad(n) { return String(n).padStart(3, "0"); }
   /* chapter pages: `images: [urls]` ho to wo, warna `dir` + 001.jpg … */
   function pageList(t, c) {
     var out = [];
     if (c.images && c.images.length) {
       c.images.forEach(function (u, i) {
-        out.push({ real: u, ph: page(t, c.num, i + 1, c.images.length), i: i + 1 });
+        out.push({ real: u, ph: pagePh(t, c.num, i + 1, c.images.length), i: i + 1, inline: null });
       });
-    } else {
+    } else if (c.dir) {
       var n = c.pages || 0;
-      for (var i = 1; i <= n; i++) {
-        var ph = page(t, c.num, i, n);
-        out.push({ real: c.dir ? (c.dir + pad(i) + ".jpg") : ph, ph: ph, i: i });
-      }
+      for (var i = 1; i <= n; i++) out.push({ real: c.dir + pad(i) + ".jpg", ph: pagePh(t, c.num, i, n), i: i, inline: null });
+    } else {
+      var m = c.pages || 0;
+      for (var j = 1; j <= m; j++) out.push({ real: null, ph: pagePh(t, c.num, j, m), i: j, inline: pageInline(t, c, j, m) });
     }
     return out;
   }
@@ -108,6 +141,11 @@
     return fetch("assets/style.json").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
       if (!j) return;
       Object.keys(map).forEach(function (k) { if (j[k]) document.documentElement.style.setProperty(map[k], j[k]); });
+      if (j.gridMin) {
+        var g = document.createElement("style");
+        g.textContent = ".mkm-grid{grid-template-columns:repeat(auto-fill,minmax(" + (Number(j.gridMin) || 180) + "px,1fr))}";
+        document.head.appendChild(g);
+      }
     }).catch(function () {});
   }
   function loadAds() {
@@ -262,9 +300,7 @@
     if (hr && ft && fc) {
       var plist = pageList(ft, fc);
       var n = Math.min(f.previewPages || 3, plist.length);
-      var imgs = plist.slice(0, n).map(function (p) {
-        return '<img src="' + p.real + '" alt="' + esc(ft.title) + " chapter " + fc.num + ", page " + p.i + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + p.ph + '\'">';
-      });
+      var imgs = plist.slice(0, n).map(function (p, k) { return imgTag(p, k > 1); });
       hr.innerHTML = '<section class="mkm-container mkm-home-reader" id="reader" aria-label="Chapter reader">' +
         '<div class="mkm-home-reader-title"><span>Now reading</span><h2>Chapter ' + esc(fc.num) + ": " + esc(fc.title) + "</h2><p>" + esc(ft.title) + "</p></div>" +
         '<div class="mkm-reader-images">' + imgs.join("") + "</div>" +
@@ -367,10 +403,6 @@
     var mode = localStorage.getItem("mkm-mode") || "strip";
     var width = localStorage.getItem("mkm-width") || "";
     var cur = 0, pages = pageList(t, c);
-    function imgTag(p, lazy) {
-      return '<img src="' + p.real + '" alt="Page ' + p.i + '" ' + (lazy ? 'loading="lazy" ' : "") +
-        'onerror="this.onerror=null;this.src=\'' + p.ph + '\'">';
-    }
     function paint() {
       var wrap = $("#reader-wrap");
       wrap.className = "mkm-reader" + (mode === "strip" && width ? " " + width : "");
@@ -458,6 +490,12 @@
 
   /* ---------- boot ---------- */
   Promise.all([loadContent(), loadAds(), loadStyle()]).then(function () {
+    var css = document.createElement("style");
+    css.textContent = ".mkm-reader-images>svg.mkm-page{width:100%;height:auto;margin:0 auto 10px;border-radius:6px;background:#fdfdf8;display:block}" +
+      ".mkm-reader-images.is-paged>svg.mkm-page{width:auto;max-width:100%;max-height:80vh}" +
+      ".mkm-home-reader .mkm-reader-images>svg.mkm-page{margin:0 auto;border-radius:0}" +
+      ".mkm-home-reader .mkm-reader-images>svg.mkm-page:first-child{border-radius:8px 8px 0 0}";
+    document.head.appendChild(css);
     chrome();
     var p = document.body.dataset.page;
     var q = new URLSearchParams(location.search);
