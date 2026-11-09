@@ -11,28 +11,54 @@
   <p id="bootmsg" style="color:#888;margin:0">script download ho rahi hai</p>
 </div>
 <script>
+window.CMS_MANUAL_INIT = true;
 (function () {
+  var boot = document.getElementById("boot");
+  var msg = document.getElementById("bootmsg");
+  function show(title, detail) {
+    boot.innerHTML =
+      "<h2 style='color:#b00020'>" + title + "</h2>" +
+      "<pre style='white-space:pre-wrap;text-align:left;max-width:720px;margin:12px auto;background:#f6f6f6;" +
+      "padding:12px;border-radius:8px;font-size:13px;color:#333'>" + (detail || "") + "</pre>" +
+      "<p style='color:#888'>Iska screenshot bhej dein.</p>";
+  }
   var urls = [
     "https://unpkg.com/decap-cms@3.8.2/dist/decap-cms.js",
     "https://cdn.jsdelivr.net/npm/decap-cms@3.8.2/dist/decap-cms.js"
   ];
-  var msg = document.getElementById("bootmsg");
   var i = 0;
-  function fail(text) {
-    document.getElementById("boot").innerHTML =
-      "<h2>" + text + "</h2><p style='color:#888'>Doosra network (mobile data) try karein, ya screenshot bhejein.</p>";
-  }
   function next() {
-    if (i >= urls.length) { fail("CMS script load nahi hui (CDN block?)"); return; }
+    if (i >= urls.length) { show("CMS script load nahi hui", "Dono CDNs fail — network/CDN block ho sakta hai. Mobile data try karein."); return; }
     msg.textContent = "CDN " + (i + 1) + " try ho raha hai…";
     var s = document.createElement("script");
     s.src = urls[i++];
-    s.onload = function () {
-      if (window.CMS) { var b = document.getElementById("boot"); if (b) b.remove(); }
-      else { msg.textContent = "script aayi magar CMS init nahi hua"; next(); }
-    };
+    s.onload = start;
     s.onerror = next;
     document.head.appendChild(s);
+  }
+  function start() {
+    fetch("config.yml").then(function (r) { return r.text(); }).then(function (t) {
+      msg.textContent = "config.yml mil gayi (" + t.length + " bytes) — CMS init ho raha hai…";
+    }).catch(function (e) {
+      show("config.yml fetch fail", String(e));
+    });
+    try {
+      if (window.CMS && CMS.registerErrorHandler) {
+        CMS.registerErrorHandler(function (e) { show("CMS error", (e && e.message) || String(e)); });
+      }
+      CMS.init();
+      setTimeout(function () {
+        var root = document.getElementById("cms-root") || document.getElementById("nc-root");
+        if (root && root.childElementCount > 0) { boot.remove(); }
+        else {
+          show("CMS init hua magar render nahi hua",
+            "root element: " + (root ? "#" + root.id + " (childs: " + root.childElementCount + ")" : "missing") +
+            "\nCMS version: " + (window.CMS && CMS.version ? CMS.version : "unknown"));
+        }
+      }, 5000);
+    } catch (e) {
+      show("init exception", (e && e.stack) || String(e));
+    }
   }
   next();
 })();
