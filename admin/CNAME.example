@@ -1,0 +1,6 @@
+# Is file ko "CNAME" naam se (bina .example) repo root me rakhein,
+# aur andar sirf apni domain likhein — koi extra line nahi:
+#
+# naam.mkm.fan
+#
+# Ya ye GitHub UI se bhi ho jata hai: Settings → Pages → Custom domain.

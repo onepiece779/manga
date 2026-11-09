@@ -1,0 +1,171 @@
+# Decap CMS — MKM Static ka admin panel
+# Login = aapka GitHub account (OAuth worker ke zariye), koi alag password nahi.
+backend:
+  name: github
+  repo: onepiece779/manga          # aapka repo
+  branch: main
+  base_url: https://mkm-cms-oauth.REPLACE-ME.workers.dev   # ← apne Cloudflare Worker ka URL
+  auth_endpoint: auth
+  commit_messages:
+    create: "CMS: {{collection}} me naya entry ({{slug}})"
+    update: "CMS: {{collection}} update ({{slug}})"
+    uploadMedia: "CMS: image upload ({{slug}})"
+
+media_folder: "assets/covers"
+public_folder: "/assets/covers"
+
+collections:
+  - name: content
+    label: "Site & Manga Content"
+    description: "Poora site content — manga, chapters, hero slides — yahan se edit hota hai."
+    editor:
+      preview: false
+    files:
+      - name: site
+        label: "Manga & Settings"
+        file: "assets/content.json"
+        format: "json"
+        fields:
+          - { name: name, label: "Site Name", widget: string }
+          - { name: tagline, label: "Tagline", widget: string }
+          - { name: about, label: "About Text", widget: text }
+          - name: social
+            label: "Social Links"
+            widget: list
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: url, label: URL, widget: string }
+          - name: cta
+            label: "CTA Button"
+            widget: object
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: url, label: URL, widget: string }
+          - name: slides
+            label: "Hero Slides"
+            widget: list
+            fields:
+              - { name: titleId, label: "Manga ID", widget: string }
+              - { name: badge, label: Badge, widget: string, required: false }
+              - { name: title, label: Heading, widget: string }
+              - { name: text, label: Text, widget: text }
+              - name: btn1
+                label: "Button 1"
+                widget: object
+                required: false
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: Link, widget: string }
+              - name: btn2
+                label: "Button 2"
+                widget: object
+                required: false
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: Link, widget: string }
+              - name: stats
+                label: "Stats Row"
+                widget: list
+                required: false
+                fields:
+                  - { name: num, label: Number, widget: string }
+                  - { name: label, label: Label, widget: string }
+          - name: feature
+            label: "Home Feature (About card + reader preview)"
+            widget: object
+            fields:
+              - { name: mangaId, label: "Manga ID", widget: string }
+              - { name: chapterId, label: "Chapter ka Manga ID", widget: string }
+              - { name: chapterNum, label: "Chapter Number", widget: number }
+              - { name: previewPages, label: "Preview Pages", widget: number }
+          - name: titles
+            label: "Manga Titles"
+            widget: list
+            fields:
+              - { name: id, label: "ID (slug, e.g. desert-fox)", widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: alt, label: "Alt Title", widget: string, required: false }
+              - { name: author, label: Author, widget: string }
+              - { name: artist, label: Artist, widget: string }
+              - { name: status, label: Status, widget: select, options: ["Ongoing", "Completed", "Hiatus"] }
+              - { name: type, label: Type, widget: select, options: ["Manga", "Manhwa", "Manhua"] }
+              - { name: year, label: Year, widget: number }
+              - name: genres
+                label: Genres
+                widget: list
+                field: { name: genre, label: Genre, widget: string }
+              - { name: rating, label: "Rating (0-5)", widget: number }
+              - { name: views, label: Views, widget: number }
+              - { name: description, label: Synopsis, widget: text }
+              - { name: cover, label: "Cover Image URL", widget: string, required: false }
+              - name: art
+                label: "Placeholder Colors (cover na ho to)"
+                widget: object
+                required: false
+                fields:
+                  - { name: a, label: "Color 1 (hex)", widget: string }
+                  - { name: b, label: "Color 2 (hex)", widget: string }
+                  - { name: label, label: "Short Label", widget: string }
+              - name: chapters
+                label: Chapters
+                widget: list
+                fields:
+                  - { name: num, label: "Chapter #", widget: number }
+                  - { name: title, label: "Chapter Title", widget: string }
+                  - { name: date, label: "Date (YYYY-MM-DD)", widget: string }
+                  - { name: pages, label: "Page Count", widget: number, required: false }
+                  - { name: dir, label: "Images Folder / URL prefix", widget: string, required: false }
+                  - name: images
+                    label: "Page URLs (agar alag alag hon)"
+                    widget: list
+                    required: false
+                    field: { name: url, label: "Image URL", widget: string }
+
+      - name: ads
+        label: "Ads Control (ads.json)"
+        file: "assets/ads.json"
+        format: "json"
+        fields:
+          - { name: _help, label: "Note", widget: text, required: false }
+          - { name: enabled, label: "Poori site pe ads ON?", widget: boolean }
+          - name: slots
+            label: "Ad Slots"
+            widget: object
+            fields:
+              - name: header
+                label: "Header Slot"
+                widget: object
+                fields:
+                  - { name: on, label: "Show?", widget: boolean }
+                  - { name: code, label: "Ad Code", widget: text }
+              - name: home
+                label: "Home Slot"
+                widget: object
+                fields:
+                  - { name: on, label: "Show?", widget: boolean }
+                  - { name: code, label: "Ad Code", widget: text }
+              - name: listing
+                label: "Browse/Detail Slot"
+                widget: object
+                fields:
+                  - { name: on, label: "Show?", widget: boolean }
+                  - { name: code, label: "Ad Code", widget: text }
+              - name: sidebar
+                label: "Sidebar Slot"
+                widget: object
+                fields:
+                  - { name: on, label: "Show?", widget: boolean }
+                  - { name: code, label: "Ad Code", widget: text }
+              - name: reader_inline
+                label: "Reader Inline Slot"
+                widget: object
+                fields:
+                  - { name: on, label: "Show?", widget: boolean }
+                  - { name: every, label: "Har kitne pages baad", widget: number }
+                  - { name: code, label: "Ad Code", widget: text }
+              - name: footer
+                label: "Footer Slot"
+                widget: object
+                fields:
+                  - { name: on, label: "Show?", widget: boolean }
+                  - { name: code, label: "Ad Code", widget: text }
