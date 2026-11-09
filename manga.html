@@ -3,44 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Manga Details — 漫画詳細 | OnePieceManga</title>
+<title>作品詳細 | OnePieceManga</title>
 <link rel="stylesheet" href="assets/css/mkm.css">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body data-page="manga" id="mkm-top">
-<a class="mkm-skip-link" href="#content">Skip to content</a>
+<a class="mkm-skip-link" href="#content">コンテンツへ移動</a>
 
 <header class="mkm-header is-sticky">
   <div class="mkm-container mkm-header-inner">
     <div class="mkm-brand">
-      <a class="mkm-logo" href="index.html" aria-label="Home"><span class="mkm-logo-mark">M</span><span class="mkm-logo-text">MKM Static</span></a>
+      <a class="mkm-logo" href="index.html" aria-label="ホーム"><span class="mkm-logo-mark">M</span><span class="mkm-logo-text">OnePieceManga</span></a>
     </div>
     <nav class="mkm-nav" aria-label="Primary menu">
       <ul class="mkm-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="search.html">Browse</a></li>
-        <li><a href="index.html#latest">Latest</a></li>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="search.html">作品一覧</a></li>
+        <li><a href="index.html#latest">最新話</a></li>
       </ul>
     </nav>
     <div class="mkm-header-actions">
       <form class="mkm-search" role="search" action="search.html" method="get">
-        <input type="search" name="s" placeholder="Search manga…" aria-label="Search manga">
-        <button type="submit" aria-label="Search">⌕</button>
+        <input type="search" name="s" placeholder="作品を検索…" aria-label="作品を検索">
+        <button type="submit" aria-label="検索">⌕</button>
       </form>
       <button type="button" class="mkm-menu-toggle" aria-expanded="false" aria-controls="mkm-mobile-menu">
-        <span class="mkm-menu-toggle-icon" aria-hidden="true"></span><span class="mkm-menu-toggle-label">Menu</span>
+        <span class="mkm-menu-toggle-icon" aria-hidden="true"></span><span class="mkm-menu-toggle-label">メニュー</span>
       </button>
     </div>
   </div>
   <div class="mkm-mobile-menu" id="mkm-mobile-menu"><div class="mkm-container">
     <ul class="mkm-mobile-nav">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="search.html">Browse</a></li>
-      <li><a href="index.html#latest">Latest</a></li>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="search.html">作品一覧</a></li>
+      <li><a href="index.html#latest">最新話</a></li>
     </ul>
     <form class="mkm-search" role="search" action="search.html" method="get">
-      <input type="search" name="s" placeholder="Search manga…" aria-label="Search manga">
-      <button type="submit" aria-label="Search">⌕</button>
+      <input type="search" name="s" placeholder="作品を検索…" aria-label="作品を検索">
+      <button type="submit" aria-label="検索">⌕</button>
     </form>
   </div></div>
 </header>
@@ -54,28 +54,35 @@
 
 <footer class="mkm-footer">
   <div class="mkm-container">
-    <div class="mkm-footer-grid has-single-menu">
+    <div class="mkm-footer-grid has-four">
       <div class="mkm-footer-brand">
-        <a class="mkm-footer-logo" href="index.html"><span class="mkm-logo-mark">M</span><span class="mkm-logo-text">MKM Static</span></a>
+        <a class="mkm-footer-logo" href="index.html"><span class="mkm-logo-mark">M</span><span class="mkm-logo-text">OnePieceManga</span></a>
         <p class="mkm-footer-about"></p>
         <div class="mkm-social"></div>
       </div>
-      <div class="mkm-footer-col"><h3>Quick Links</h3>
+      <div class="mkm-footer-col"><h3>ナビゲーション</h3>
         <ul class="mkm-footer-menu">
-          <li><a href="search.html">Browse manga / 作品一覧</a></li>
-          <li><a href="index.html#latest">Latest updates</a></li>
-          <li><a href="about.html">About / サイトについて</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="dmca.html">DMCA</a></li>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="search.html">作品一覧</a></li>
+          <li><a href="index.html#latest">最新話</a></li>
+          <li><a href="about.html">サイト紹介</a></li>
         </ul>
       </div>
-      <div class="mkm-footer-col"><h3>Stay Updated</h3><p>New chapter alerts and community updates.</p></div>
+      <div class="mkm-footer-col"><h3>インフォメーション</h3>
+        <ul class="mkm-footer-menu">
+          <li><a href="contact.html">お問い合わせ</a></li>
+          <li><a href="privacy.html">プライバシーポリシー</a></li>
+          <li><a href="terms.html">利用規約</a></li>
+          <li><a href="dmca.html">著作権ポリシー(DMCA)</a></li>
+        </ul>
+      </div>
+      <div class="mkm-footer-col"><h3>ジャンル</h3>
+        <ul class="mkm-footer-menu mkm-footer-genres"></ul>
+      </div>
     </div>
     <div class="mkm-footer-bottom">
-      <p>© <span data-year></span> MKM Static.</p>
-      <p>Theme: <a href="https://mkm.fan/">MKM Manga Pro</a> (GPLv2) — static port</p>
+      <p>© <span data-year></span> OnePieceManga. 無断転載禁止。</p>
+      <p>オリジナル日本語マンガの無料連載サイト</p>
     </div>
   </div>
 </footer>

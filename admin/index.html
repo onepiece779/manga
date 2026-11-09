@@ -51,13 +51,13 @@ details.t .in{padding:14px}
       <div class="row"><label>Your PIN</label><input id="g-pin" type="password" inputmode="numeric" placeholder="••••"></div>
       <button class="btn" id="g-unlock">Unlock</button>
       <div class="status" id="g-pinstatus"></div>
-      <p><small>Forgot PIN? <a href="#" id="g-forget">Reset (token dobara dalna hoga)</a></small></p>
+      <p><small>Forgot PIN? <a href="#" id="g-forget">Reset (you will re-enter your token)</a></small></p>
     </div>
     <div id="gate-login">
       <div class="row"><label>GitHub username</label><input id="g-user" value="onepiece779" autocomplete="username"></div>
       <div class="row"><label>Access token</label><input id="g-token" type="password" placeholder="github_pat_…" autocomplete="current-password"></div>
       <div class="row"><label>Set your PIN (optional)</label><input id="g-newpin" type="password" inputmode="numeric" placeholder="4-6 digits"></div>
-      <p><small>PIN sirf is browser me local lock ke liye hai — asli key token hi rahega.
+      <p><small>The PIN is only a local lock for this browser — the token remains the real key.
       No token? <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Create one</a>:
       Fine-grained → repo <b>manga</b> → Permissions: <b>Contents = Read and write</b>.</small></p>
       <button class="btn" id="g-login">Login</button>
@@ -98,7 +98,7 @@ details.t .in{padding:14px}
 
       <div class="card" id="sec-ads">
         <h2>Ads units</h2>
-        <p class="tagline">Har slot me apna ad code paste karein (AdSense / Ezoic / Monetag). Show = live.</p>
+        <p class="tagline">Paste your ad code (AdSense / Ezoic / Monetag) into each slot. Show = live.</p>
         <div class="row"><label>All ads on/off</label><select id="a-enabled"><option value="1">ON</option><option value="0">OFF</option></select></div>
         <div id="a-slots"></div>
       </div>
@@ -234,7 +234,7 @@ function renderTitles(){
       f("Views", "t"+i+"views", t.views) +
       "<div class='row ta'><label>Cover image</label><div style='display:flex;gap:8px'><input id='t"+i+"cover' value='" + esc(t.cover||"") + "' placeholder='URL…'><input type='file' accept='image/*' id='t"+i+"covf' style='max-width:150px'></div></div>" +
       "</div>" +
-      "<div style='margin:6px 0'><button class='btn ghost sm' data-covup='" + i + "'>Upload cover file</button> <small>ya URL box me paste karein</small></div>" +
+      "<div style='margin:6px 0'><button class='btn ghost sm' data-covup='" + i + "'>Upload cover file</button> <small>or paste an image URL</small></div>" +
       "<div class='row ta'><label>Genres (comma)</label><input id='t"+i+"genres' value='" + esc((t.genres||[]).join(", ")) + "'></div>" +
       "<div class='row ta'><label>Synopsis</label><textarea id='t"+i+"desc'>" + esc(t.description||"") + "</textarea></div>" +
       "<div class='chh'><h3 style='margin:0'>Chapters</h3><button class='btn sm' data-addch='" + i + "'>+ Add chapter</button></div>" +
@@ -248,9 +248,9 @@ function renderTitles(){
       renderChapters(i); status("Chapter added - upload pages or paste URLs, then Save.");
     };
     d.querySelector("[data-covup]").onclick = function(){
-      var fi = document.getElementById("t"+i+"covf"); if (!fi.files[0]) { status("Pehle cover file choose karein.", "er"); return; }
+      var fi = document.getElementById("t"+i+"covf"); if (!fi.files[0]) { status("Choose a cover file first.", "er"); return; }
       uploadBlob("assets/covers/" + t.id + ext(fi.files[0].name), fi.files[0]).then(function(path){
-        t.cover = path; document.getElementById("t"+i+"cover").value = t.cover; status("Cover uploaded: " + path + " (Save karein).", "ok");
+        t.cover = path; document.getElementById("t"+i+"cover").value = t.cover; status("Cover uploaded: " + path + " (then Save).", "ok");
       }).catch(function(e){ status("Cover upload fail: " + e.message, "er"); });
     };
     bindTitle(i);
@@ -272,12 +272,12 @@ function renderChapters(i){
       "<div class='row ta'><label>Images folder / URL prefix</label><input id='c"+i+"_"+j+"dir' value='" + esc(ch.dir||"") + "'></div>" +
       "<div class='row ta'><label>Page URLs (one per line)</label><textarea id='c"+i+"_"+j+"imgs'>" + esc((ch.images||[]).join("\n")) + "</textarea></div>" +
       "<div class='row ta'><label>Upload page images</label><input type='file' accept='image/*' multiple id='c"+i+"_"+j+"files'></div>" +
-      "<button class='btn ghost sm' data-up='" + i + "-" + j + "'>Upload pages to chapter folder</button> <small>files 001.jpg, 002.jpg… ke naam se chapter folder me chali jayengi</small>";
+      "<button class='btn ghost sm' data-up='" + i + "-" + j + "'>Upload pages to chapter folder</button> <small>saved as 001.jpg, 002.jpg… in the chapter folder</small>";
     box.appendChild(div);
     div.querySelector("[data-delch]").onclick = function(){ if (confirm("Delete chapter " + ch.num + "?")) { t.chapters.splice(j,1); renderChapters(i); } };
     div.querySelector("[data-up]").onclick = function(){
       var fi = document.getElementById("c"+i+"_"+j+"files");
-      if (!fi.files.length) { status("Pehle images choose karein.", "er"); return; }
+      if (!fi.files.length) { status("Choose page images first.", "er"); return; }
       var dir = (ch.dir || ("assets/manga/" + t.id + "/ch-" + String(ch.num).padStart(3,"0") + "/")).replace(/\/?$/, "/");
       ch.dir = dir; delete ch.images;
       var files = Array.prototype.slice.call(fi.files).sort(function(a,b){return a.name.localeCompare(b.name, undefined, {numeric:true});});

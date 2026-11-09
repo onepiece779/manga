@@ -1,7 +1,7 @@
 {
   "name": "OnePieceManga",
-  "tagline": "毎日更新・日本語マンガ無料連載 — Read original Japanese manga free, every day.",
-  "about": "OnePieceManga (onepiecemanga.mkm.fan) is an independent, fan-operated reading library of ORIGINAL Japanese-language manga. We are not affiliated with any existing franchise or publisher; only original, licensed or public-domain works are published here. 当サイトはオリジナル作品のみを掲載する独立系の無料マンガ図書館です。",
+  "tagline": "オリジナル日本語マンガの無料連載サイト。毎日更新・全話無料。",
+  "about": "OnePieceMangaはオリジナルの日本語マンガを毎日更新で連載する無料サイトです。冒険・アクション・ファンタジー・グルメ・SF・スポーツなど20作品・60話以上を収録し、すべて無料で読めます。各作品ページにあらすじと話数リスト、関連作品を掲載しています。",
   "social": [
     {
       "label": "Telegram",
@@ -17,45 +17,45 @@
     }
   ],
   "cta": {
-    "label": "読みはじめる / Start Reading",
+    "label": "読みはじめる",
     "url": "#latest"
   },
   "slides": [
     {
       "titleId": "hekikai-no-requiem",
-      "badge": "Featured / 注目",
+      "badge": "注目",
       "title": "碧海のレクイエム — 七つの海へ",
-      "text": "嵐の夜に沈んだ伝説の海賊船の鐘が、再び鳴った。少年カイの海洋冒険譚、開幕。New chapters every day.",
+      "text": "嵐の夜に沈んだ伝説の海賊船の鐘が、再び鳴った。少年カイの海洋冒険譚、開幕。毎日新着話更新。",
       "btn1": {
-        "label": "第5話を読む / Read Ch. 5",
+        "label": "第5話を読む",
         "href": "read.html?id=hekikai-no-requiem&ch=5"
       },
       "btn2": {
-        "label": "作品ページ / Details",
+        "label": "作品ページ",
         "href": "manga.html?id=hekikai-no-requiem"
       },
       "stats": [
         {
           "num": "20",
-          "label": "Manga / 作品"
+          "label": "作品"
         },
         {
           "num": "60",
-          "label": "Chapters / 話"
+          "label": "話"
         },
         {
           "num": "210K+",
-          "label": "Readers / 読者"
+          "label": "読者"
         }
       ]
     },
     {
       "titleId": "dennou-samurai-kagura",
-      "badge": "Trending / 急上昇",
+      "badge": "急上昇",
       "title": "電脳侍 KAGURA — 記憶を斬り取り戻せ",
       "text": "電脳江戸2077。自分の過去を売った侍が、データ天守閣の将軍AIに挑む。サイバー時代劇、最新話公開中。",
       "btn1": {
-        "label": "第7話を読む / Read Ch. 7",
+        "label": "第7話を読む",
         "href": "read.html?id=dennou-samurai-kagura&ch=7"
       }
     }
