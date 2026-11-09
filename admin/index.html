@@ -7,8 +7,8 @@
 </head>
 <body>
 <div id="boot" style="font-family:system-ui,sans-serif;padding:60px 20px;text-align:center;color:#444">
-  <h2 style="margin:0 0 8px">CMS load ho raha hai…</h2>
-  <p id="bootmsg" style="color:#888;margin:0">script download ho rahi hai</p>
+  <h2 style="margin:0 0 8px">Loading CMS…</h2>
+  <p id="bootmsg" style="color:#888;margin:0">downloading script</p>
 </div>
 <script>
 window.CMS_MANUAL_INIT = true;
@@ -20,7 +20,7 @@ window.CMS_MANUAL_INIT = true;
       "<h2 style='color:#b00020'>" + title + "</h2>" +
       "<pre style='white-space:pre-wrap;text-align:left;max-width:720px;margin:12px auto;background:#f6f6f6;" +
       "padding:12px;border-radius:8px;font-size:13px;color:#333'>" + (detail || "") + "</pre>" +
-      "<p style='color:#888'>Iska screenshot bhej dein.</p>";
+      "<p style='color:#888'>Please send a screenshot of this box.</p>";
   }
   var urls = [
     "https://unpkg.com/decap-cms@3.8.2/dist/decap-cms.js",
@@ -28,8 +28,8 @@ window.CMS_MANUAL_INIT = true;
   ];
   var i = 0;
   function next() {
-    if (i >= urls.length) { show("CMS script load nahi hui", "Dono CDNs fail — network/CDN block ho sakta hai. Mobile data try karein."); return; }
-    msg.textContent = "CDN " + (i + 1) + " try ho raha hai…";
+    if (i >= urls.length) { show("CMS script failed to load", "Both CDNs failed - network/CDN may be blocked. Try mobile data."); return; }
+    msg.textContent = "trying CDN " + (i + 1) + "…";
     var s = document.createElement("script");
     s.src = urls[i++];
     s.onload = start;
@@ -38,9 +38,9 @@ window.CMS_MANUAL_INIT = true;
   }
   function start() {
     fetch("config.yml").then(function (r) { return r.text(); }).then(function (t) {
-      msg.textContent = "config.yml mil gayi (" + t.length + " bytes) — CMS init ho raha hai…";
+      msg.textContent = "config.yml loaded (" + t.length + " bytes) - initializing CMS…";
     }).catch(function (e) {
-      show("config.yml fetch fail", String(e));
+      show("config.yml fetch failed", String(e));
     });
     try {
       if (window.CMS && CMS.registerErrorHandler) {
@@ -51,7 +51,7 @@ window.CMS_MANUAL_INIT = true;
         var root = document.getElementById("cms-root") || document.getElementById("nc-root");
         if (root && root.childElementCount > 0) { boot.remove(); }
         else {
-          show("CMS init hua magar render nahi hua",
+          show("CMS initialized but nothing rendered",
             "root element: " + (root ? "#" + root.id + " (childs: " + root.childElementCount + ")" : "missing") +
             "\nCMS version: " + (window.CMS && CMS.version ? CMS.version : "unknown"));
         }
