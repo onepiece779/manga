@@ -285,26 +285,14 @@
         "</div></div></section>";
     }).join("");
     var f = S.feature, ft = find(f.mangaId), fc = ft ? chOf(ft, f.chapterNum) : null;
-    var feat = "";
-    if (ft) {
-      feat = '<div id="feature"><div class="mkm-container"><div class="mkm-layout mkm-feature-layout">' +
-        '<article class="mkm-feature-card"><h2>作品紹介:' + esc(ft.title) + "</h2>" +
-        '<div class="mkm-entry-content"><p>' + esc(ft.description) + "</p></div>" +
-        '<div class="mkm-feature-genres">' + ft.genres.map(function (g) { return '<a class="mkm-genre" href="search.html?s=' + encodeURIComponent(g) + '">' + esc(g) + "</a>"; }).join("") + "</div>" +
-        '<dl class="mkm-feature-meta">' +
-        ["ステータス:" + ft.status, "タイプ:" + ft.type, "作者:" + ft.author, "漫画:" + ft.artist].map(function (kv) {
-          var p = kv.split(":");
-          return "<div><dt>" + esc(p[0]) + "</dt><dd>" + esc(p.slice(1).join(":")) + "</dd></div>";
-        }).join("") + "</dl></article>" +
-        '<div class="mkm-sidebar"></div></div></div></div>';
-    }
     var ordered = allChapters().map(function (x) { return x.t; }).filter(function (t, i, arr) { return arr.indexOf(t) === i; });
     S.titles.forEach(function (t) { if (ordered.indexOf(t) === -1) ordered.push(t); });
-    var latest = '<div class="mkm-container"><div class="mkm-layout mkm-latest-full"><div>' +
+    var main = '<div class="mkm-container"><div class="mkm-layout"><div>' +
       '<div class="mkm-section mkm-listing-section" id="latest"><div class="mkm-section-head">' +
       '<div><h2 class="mkm-title">最新マンガ</h2><p class="mkm-subtitle">' + ordered.length + '作品のオリジナル連載 — 毎日更新中</p></div>' +
       '<a class="mkm-btn mkm-btn-sm mkm-btn-ghost" href="search.html">すべて見る</a></div>' +
-      '<div class="mkm-grid">' + ordered.map(card).join("") + "</div></div></div></div></div>";
+      '<div class="mkm-grid">' + ordered.map(card).join("") + "</div></div>" +
+      '</div><div class="mkm-sidebar"></div></div></div>';
     var reader = "";
     if (ft && fc) {
       var plist = pageList(ft, fc);
@@ -317,7 +305,7 @@
     root.innerHTML = '<div class="mkm-hero-slider" id="hero-slider" aria-label="Featured highlights">' + slides +
       (S.slides.length > 1 ? '<div class="mkm-slider-controls" hidden><button type="button" class="mkm-slider-prev" aria-label="Previous slide">&#8592;</button><button type="button" class="mkm-slider-next" aria-label="Next slide">&#8594;</button></div>' : "") +
       "</div>" +
-      '<div data-ad="home"></div>' + feat + latest + reader;
+      '<div data-ad="home"></div>' + main + reader;
     $$(".mkm-hero-slide", root).forEach(function (sl, i) { sl.hidden = i !== 0; });
     sidebar();
     paintAds();
